@@ -1,7 +1,9 @@
-import './App.css';
+import AuthPage from './components/router/view/AuthPage';
 
-function App() {
-  return <></>;
+export default function App() {
+  return (
+    <div className="App">
+      <AuthPage />
+    </div>
+  );
 }
-
-export default App;
