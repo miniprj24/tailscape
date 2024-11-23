@@ -3,7 +3,8 @@ import { FaDog, FaUserShield, FaFish } from 'react-icons/fa';
 
 const AuthPage = () => {
     const [mode, setMode] = useState('login');
-    const [slideDirection, setSlideDirection] = useState('right');
+    const [slideLeftDirection, setSlideLeftDirection] = useState('right');
+    const [slideRightDirection, setSlideRightDirection] = useState('left');
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -12,7 +13,8 @@ const AuthPage = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setSlideDirection('none');
+            setSlideLeftDirection('none');
+            setSlideRightDirection('none');
         }, 500);
         return () => clearTimeout(timer);
     }, [mode]);
@@ -31,19 +33,23 @@ const AuthPage = () => {
 
     const switchMode = (newMode) => {
         if (newMode === 'admin') {
-            setSlideDirection('bottom');
+            setSlideLeftDirection('bottom');
+            setSlideRightDirection('top');
         } else if (mode === 'admin') {
-            setSlideDirection('top');
+            setSlideLeftDirection('top');
+            setSlideRightDirection('bottom');
         } else if (newMode === 'signup') {
-            setSlideDirection('right');
+            setSlideLeftDirection('right');
+            setSlideRightDirection('left');
         } else {
-            setSlideDirection('left');
+            setSlideLeftDirection('left');
+            setSlideRightDirection('right');
         }
         setMode(newMode);
     };
 
-    const getSlideClass = () => {
-        switch (slideDirection) {
+    const getSlideClass = (slideLeftDirection) => {
+        switch (slideLeftDirection) {
             case 'left':
                 return 'animate-slide-left';
             case 'right':
@@ -58,13 +64,12 @@ const AuthPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-blue-100 flex items-center justify-center p-4 overflow-hidden">
+        <div className={`min-h-screen bg-blue-100 flex items-center justify-center p-4 overflow-hidden transition-colors duration-500 ${mode === 'admin' ? 'bg-red-100' : 'bg-blue-100'}`}>
             <div className="relative w-full max-w-4xl">
                 <div className={`dog-face-ball -top-9 -left-9 absolute w-24 h-24 z-0 rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-110 ${mode === 'admin' ? 'bg-red-200' : 'bg-blue-200'
                         }`}>
-                    {/* Change this for dog face */}
-                    <FaFish
-                        className={`text-4xl transform rotate-45 transition-colors duration-500 ${mode === 'admin' ? 'text-red-600' : 'text-blue-600'
+                    <FaDog
+                        className={`text-4xl transform transition-colors duration-500 ${mode === 'admin' ? 'text-red-600' : 'text-blue-600'
                             }`}
                     />
                 </div>
@@ -81,7 +86,7 @@ const AuthPage = () => {
 
                 <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
                     <div className="md:flex">
-                        <div className={`md:w-1/2 p-8 z-10 relative ${getSlideClass()}`}>
+                        <div className={`md:w-1/2 p-8 z-10 relative ${getSlideClass(slideLeftDirection)}`}>
                             <h2
                                 className={`text-3xl font-bold mb-6 text-center transition-colors duration-300 ${mode === 'admin' ? 'text-red-600' : 'text-blue-600'}`}
                             >
@@ -89,7 +94,7 @@ const AuthPage = () => {
                                     ? 'Admin Access'
                                     : mode === 'signup'
                                         ? 'Join Our Pet Community'
-                                        : 'Welcome Back'}
+                                        : 'Welcome Back!'}
                             </h2>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 {mode === 'signup' && (
@@ -170,7 +175,7 @@ const AuthPage = () => {
                             </div>
                         </div>
                         <div
-                            className={`md:w-1/2 text-white p-8 flex flex-col justify-center items-center transition-all duration-500 ease-in-out ${mode === 'admin' ? 'bg-red-600' : 'bg-blue-600'
+                            className={`right-side md:w-1/2 text-white p-8 flex flex-col justify-center items-center transition-all duration-500 ease-in-out ${getSlideClass(slideRightDirection)} ${mode === 'admin' ? 'bg-red-600' : 'bg-blue-600'
                                 }`}
                         >
                             <h3 className="text-2xl font-bold mb-4">
