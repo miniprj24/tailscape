@@ -1,9 +1,31 @@
-import React from 'react'
-import { FaDog, FaCat, FaFish, FaFeather } from 'react-icons/fa'
-import ProductCard from '../../components/ProductCard'
-import CategoryCard from '../../components/CategoryCard'
+import React, { useEffect, useState } from 'react';
+import { FaDog, FaCat, FaFish, FaFeather } from 'react-icons/fa';
+import ProductCard from '../../components/ProductCard';
+import CategoryCard from '../../components/CategoryCard';
 
 export default function Home() {
+  const [products, setProducts] = useState([]);
+
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/products');
+        const data = await response.json();
+
+        // Shuffle and get 4 random products
+        const shuffled = (data.products).sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 4);
+
+        setProducts(selected);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="min-h-screen bg-blue-50">
       <main>
@@ -26,10 +48,14 @@ export default function Home() {
         <section className="py-12 px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <ProductCard name="Premium Dog Food" price={29.99} image="/placeholder.svg?height=200&width=200" />
-            <ProductCard name="Cat Toy Set" price={14.99} image="/placeholder.svg?height=200&width=200" />
-            <ProductCard name="Fish Tank Filter" price={39.99} image="/placeholder.svg?height=200&width=200" />
-            <ProductCard name="Bird Cage" price={49.99} image="/placeholder.svg?height=200&width=200" />
+            {products.map((product) => (
+              <ProductCard
+                key={product._id}
+                name={product.name}
+                price={product.price}
+                image={product.image || '/placeholder.svg?height=200&width=200'}
+              />
+            ))}
           </div>
         </section>
 
@@ -61,6 +87,7 @@ export default function Home() {
         </section>
       </main>
     </div>
-  )
+  );
 }
+
 
