@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -6,7 +6,16 @@ import { CardContent } from '../../components/ui/CardContent';
 import { CardTitle } from '../../components/ui/CardTitle';
 import { CardHeader } from '../../components/ui/CardHeader';
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
 const data = [
   { name: 'Jan', sales: 4000 },
@@ -15,13 +24,13 @@ const data = [
   { name: 'Apr', sales: 4500 },
   { name: 'May', sales: 6000 },
   { name: 'Jun', sales: 5500 },
-]
+];
 
 export default function AdminDashboard() {
-  const user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user);
 
   if (!user || user.role !== 'admin') {
-    return <div>Access denied. Admin privileges required.</div>
+    return <div>Access denied. Admin privileges required.</div>;
   }
 
   return (
@@ -76,5 +85,5 @@ export default function AdminDashboard() {
         </div>
       </main>
     </div>
-  )
+  );
 }

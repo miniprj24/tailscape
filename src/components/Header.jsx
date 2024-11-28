@@ -1,11 +1,11 @@
-import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { FaDog, FaShoppingCart, FaUser } from 'react-icons/fa'
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { FaDog, FaShoppingCart, FaUser } from 'react-icons/fa';
 import { Button } from '../components/ui/Button';
 
 export default function Header() {
-  const cartItems = useSelector((state) => state.cart.items)
-  const auth = useSelector((state) => state.auth)
+  const cartItems = useSelector((state) => state.cart.items);
+  const auth = useSelector((state) => state.auth);
 
   return (
     <header className="bg-blue-600 text-white p-4">
@@ -16,11 +16,24 @@ export default function Header() {
         </NavLink>
         <nav>
           <ul className="flex space-x-4">
-            <li><NavLink to="/products">Products</NavLink></li>
-            <li><NavLink to="/pets">Pets</NavLink></li>
-            <li><NavLink to="/services">Services</NavLink></li>
-            <li><NavLink to="/about">About</NavLink></li>
-            <li><NavLink to="/contact">Contact</NavLink></li>
+            <li>
+              <NavLink to="/products">Products</NavLink>
+            </li>
+            <li>
+              <NavLink to="/pets">Pets</NavLink>
+            </li>
+            <li>
+              <NavLink to="/AppointmentsPage">Appointments</NavLink>
+            </li>
+            <li>
+              <NavLink to="/services">Services</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">Contact</NavLink>
+            </li>
           </ul>
         </nav>
         <div className="flex items-center space-x-4">
@@ -50,6 +63,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
-

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '../../store/cartSlice'
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/cartSlice';
 import { motion } from 'framer-motion';
-import axios from 'axios'
+import axios from 'axios';
 
 const Spinner = () => (
   <div className="flex justify-center items-center h-64">
     <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
   </div>
-)
+);
 
 const ProductCard = ({ product, onAddToCart }) => {
-  const [imageLoaded, setImageLoaded] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <motion.div
@@ -47,44 +47,46 @@ const ProductCard = ({ product, onAddToCart }) => {
         </button>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
 const Products = () => {
-  const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState(['All'])
-  const [sortBy, setSortBy] = useState('name')
-  const [filterCategory, setFilterCategory] = useState('All')
-  const [loading, setLoading] = useState(true) // Added loading state
-  const dispatch = useDispatch()
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState(['All']);
+  const [sortBy, setSortBy] = useState('name');
+  const [filterCategory, setFilterCategory] = useState('All');
+  const [loading, setLoading] = useState(true); // Added loading state
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true) // Show spinner
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`) // Replace with your API endpoint
-        const fetchedProducts = response.data.products
+        setLoading(true); // Show spinner
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/products`
+        ); // Replace with your API endpoint
+        const fetchedProducts = response.data.products;
 
         const uniqueCategories = [
           'All',
-          ...new Set(fetchedProducts.map((product) => product.pet_type))
-        ]
+          ...new Set(fetchedProducts.map((product) => product.pet_type)),
+        ];
 
-        setProducts(fetchedProducts)
-        setCategories(uniqueCategories)
+        setProducts(fetchedProducts);
+        setCategories(uniqueCategories);
       } catch (error) {
-        console.error('Error fetching products:', error)
+        console.error('Error fetching products:', error);
       } finally {
-        setLoading(false) // Hide spinner
+        setLoading(false); // Hide spinner
       }
-    }
+    };
 
-    fetchProducts()
-  }, [])
+    fetchProducts();
+  }, []);
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
-  }
+    dispatch(addToCart(product));
+  };
 
   const sortedAndFilteredProducts = products
     .filter(
@@ -92,9 +94,9 @@ const Products = () => {
         filterCategory === 'All' || product.pet_type === filterCategory
     )
     .sort((a, b) => {
-      if (sortBy === 'price') return a.price - b.price
-      return a.name.localeCompare(b.name)
-    })
+      if (sortBy === 'price') return a.price - b.price;
+      return a.name.localeCompare(b.name);
+    });
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -138,7 +140,7 @@ const Products = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

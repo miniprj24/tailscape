@@ -1,4 +1,3 @@
-
 import { Button } from '../../components/ui/Button';
 import { TextArea } from '../../components/ui/TextArea';
 import { Input } from '../../components/ui/Input';
@@ -12,7 +11,8 @@ export default function ContactPage() {
           <div>
             <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
             <p className="mb-4">
-              We're here to help! If you have any questions, concerns, or just want to say hello, please don't hesitate to reach out to us.
+              We're here to help! If you have any questions, concerns, or just
+              want to say hello, please don't hesitate to reach out to us.
             </p>
             <div className="mb-4">
               <h3 className="font-semibold">Address:</h3>
@@ -37,27 +37,36 @@ export default function ContactPage() {
             <h2 className="text-2xl font-semibold mb-4">Send Us a Message</h2>
             <form className="space-y-4">
               <div>
-                <label htmlFor="name" className="block mb-1">Name</label>
+                <label htmlFor="name" className="block mb-1">
+                  Name
+                </label>
                 <Input type="text" id="name" name="name" required />
               </div>
               <div>
-                <label htmlFor="email" className="block mb-1">Email</label>
+                <label htmlFor="email" className="block mb-1">
+                  Email
+                </label>
                 <Input type="email" id="email" name="email" required />
               </div>
               <div>
-                <label htmlFor="subject" className="block mb-1">Subject</label>
+                <label htmlFor="subject" className="block mb-1">
+                  Subject
+                </label>
                 <Input type="text" id="subject" name="subject" required />
               </div>
               <div>
-                <label htmlFor="message" className="block mb-1">Message</label>
+                <label htmlFor="message" className="block mb-1">
+                  Message
+                </label>
                 <TextArea id="message" name="message" rows={5} required />
               </div>
-              <Button type="submit" className="w-full">Send Message</Button>
+              <Button type="submit" className="w-full">
+                Send Message
+              </Button>
             </form>
           </div>
         </div>
       </main>
     </div>
-  )
+  );
 }
-

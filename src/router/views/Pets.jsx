@@ -14,7 +14,7 @@ const Spinner = () => (
   <div className="flex justify-center items-center h-64">
     <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
   </div>
-)
+);
 
 export default function PetsPage() {
   const [pets, setPets] = useState([]);
@@ -27,7 +27,9 @@ export default function PetsPage() {
     const fetchPets = async () => {
       try {
         setLoading(true); // Show loading spinner
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/pets`); // Replace with your API endpoint
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/pets`
+        ); // Replace with your API endpoint
         const data = await response.json();
 
         if (Array.isArray(data.pet)) {
@@ -47,10 +49,11 @@ export default function PetsPage() {
 
   // Ensure pets is always an array before calling .filter()
   const filteredAndSortedPets = (Array.isArray(pets) ? pets : [])
-    .filter((pet) =>
-      pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pet.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pet.breed.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (pet) =>
+        pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pet.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pet.breed.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       if (sortBy === 'price') return a.price - b.price;
@@ -88,16 +91,38 @@ export default function PetsPage() {
             {filteredAndSortedPets.map((pet) => (
               <Card key={pet._id}>
                 <CardHeader>
-                  <img src={pet.images[0] || '/placeholder.svg'} alt={pet.name} width={200} height={200} className="w-full h-48 object-cover rounded-t-lg" />
+                  <img
+                    src={pet.images[0] || '/placeholder.svg'}
+                    alt={pet.name}
+                    width={200}
+                    height={200}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
                 </CardHeader>
                 <CardContent>
                   <CardTitle>{pet.name}</CardTitle>
-                  <p>{pet.species} - {pet.breed}</p>
+                  <p>
+                    {pet.species} - {pet.breed}
+                  </p>
                   <p>Age: {pet.age} years</p>
-                  <p className="font-bold mt-2">{pet.currency} {pet.price}</p>
+                  <p className="font-bold mt-2">
+                    {pet.currency} {pet.price}
+                  </p>
                 </CardContent>
                 <CardFooter>
-                  <Button onClick={() => dispatch(addToCart({ id: pet.id, name: pet.name, price: pet.price, quantity: 1, image: pet.images[0] }))}>
+                  <Button
+                    onClick={() =>
+                      dispatch(
+                        addToCart({
+                          id: pet.id,
+                          name: pet.name,
+                          price: pet.price,
+                          quantity: 1,
+                          image: pet.images[0],
+                        })
+                      )
+                    }
+                  >
                     Add to Cart
                   </Button>
                 </CardFooter>
@@ -106,7 +131,6 @@ export default function PetsPage() {
           </div>
         )}
       </main>
-      <Footer />
     </div>
   );
 }
