@@ -27,7 +27,10 @@ const Checkout = () => {
     // Reset form or redirect to a confirmation page
   };
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -40,8 +43,13 @@ const Checkout = () => {
         >
           <h2 className="text-2xl font-semibold mb-4">Your Order</h2>
           {cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between items-center mb-2">
-              <span>{item.name} x {item.quantity}</span>
+            <div
+              key={item.id}
+              className="flex justify-between items-center mb-2"
+            >
+              <span>
+                {item.name} x {item.quantity}
+              </span>
               <span>${(item.price * item.quantity).toFixed(2)}</span>
             </div>
           ))}
@@ -149,4 +157,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-

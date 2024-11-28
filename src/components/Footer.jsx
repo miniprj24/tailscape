@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom'
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'
+import { NavLink } from 'react-router-dom';
+import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -49,5 +49,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

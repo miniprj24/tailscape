@@ -1,13 +1,15 @@
-
-import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, updateQuantity } from '../../store/cartSlice'
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart, updateQuantity } from '../../store/cartSlice';
 import { Button } from '../../components/ui/Button';
 
 export default function CartPage() {
-  const cartItems = useSelector((state) => state.cart.items)
-  const dispatch = useDispatch()
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="min-h-screen bg-blue-50">
@@ -18,10 +20,19 @@ export default function CartPage() {
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-              {cartItems.map(item => (
-                <div key={item.id} className="flex items-center justify-between border-b py-4">
+              {cartItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between border-b py-4"
+                >
                   <div className="flex items-center">
-                    <img src={item.image} alt={item.name} width={80} height={80} className="rounded-md mr-4" />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      width={80}
+                      height={80}
+                      className="rounded-md mr-4"
+                    />
                     <div>
                       <h3 className="font-semibold">{item.name}</h3>
                       <p>${item.price.toFixed(2)}</p>
@@ -32,10 +43,20 @@ export default function CartPage() {
                       type="number"
                       min="1"
                       value={item.quantity}
-                      onChange={(e) => dispatch(updateQuantity({ id: item.id, quantity: parseInt(e.target.value) }))}
+                      onChange={(e) =>
+                        dispatch(
+                          updateQuantity({
+                            id: item.id,
+                            quantity: parseInt(e.target.value),
+                          })
+                        )
+                      }
                       className="w-16 mr-4"
                     />
-                    <Button variant="destructive" onClick={() => dispatch(removeFromCart(item.id))}>
+                    <Button
+                      variant="destructive"
+                      onClick={() => dispatch(removeFromCart(item.id))}
+                    >
                       Remove
                     </Button>
                   </div>
@@ -64,6 +85,5 @@ export default function CartPage() {
         )}
       </main>
     </div>
-  )
+  );
 }
-
