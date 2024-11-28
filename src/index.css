@@ -21,3 +21,16 @@
     Now, it will be way easier to identify
     <input class="input"/>
 **/
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

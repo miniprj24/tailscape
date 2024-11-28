@@ -205,7 +205,10 @@ const AuthPage = () => {
             <div
               className={`right-side md:w-1/2 text-white p-8 flex flex-col justify-center items-center transition-all duration-500 ease-in-out ${getSlideClass(
                 slideRightDirection
-              )} ${mode === 'admin' ? 'bg-red-600' : 'bg-blue-600'}`}
+              )} ${
+                mode === 'admin' ?
+                'bg-gradient-to-t from-red-700 to-red-500' : 
+                'bg-gradient-to-t from-blue-700 to-blue-500'}`}
             >
               <h3 className="text-2xl font-bold mb-4">
                 {mode === 'admin' ? 'Admin Portal' : 'Pet Community Benefits'}

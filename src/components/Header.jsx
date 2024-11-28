@@ -7,7 +7,7 @@ export default function Header() {
   const auth = useSelector((state) => state.auth);
 
   return (
-    <header className="bg-blue-700 text-white shadow-md">
+    <header className="sticky top-0 bg-gradient-to-t from-blue-700 to-blue-500 text-white shadow-md z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <NavLink
@@ -35,6 +35,14 @@ export default function Header() {
                 className="hover:text-gray-300 transition duration-200"
               >
                 Pets
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/AppointmentsPage"
+                className="hover:text-gray-300 transition duration-200"
+              >
+                Appointments
               </NavLink>
             </li>
             <li>
@@ -69,9 +77,9 @@ export default function Header() {
           {/* Shopping Cart Link */}
           <NavLink
             to="/cart"
-            className="group relative flex items-center p-2 hover:bg-gray-800 rounded-md transition duration-200"
+            className="group relative flex items-center p-2 hover:bg-white rounded-md transition duration-200"
           >
-            <FaShoppingCart className="text-2xl group-hover:text-gray-300 transition duration-200" />
+            <FaShoppingCart className="text-2xl group-hover:text-black transition duration-200" />
             {cartItems.length > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
                 {cartItems.reduce((total, item) => total + item.quantity, 0)}
@@ -83,18 +91,20 @@ export default function Header() {
           {auth.isAuthenticated ? (
             <NavLink
               to={auth.user?.role === 'admin' ? '/admin' : '/dashboard'}
-              className="flex items-center p-2 hover:bg-gray-800 rounded-md transition duration-200"
+              className="group flex items-center p-2 hover:bg-white rounded-md transition duration-200"
             >
-              <FaUser className="text-xl mr-2 group-hover:text-gray-300 transition duration-200" />
-              <span className="text-lg font-medium">{auth.user?.name}</span>
+              <FaUser className="text-xl mr-2 group-hover:text-black transition duration-200" />
+              <span className="text-lg font-medium group-hover:text-black">
+                {auth.user?.name}
+              </span>
             </NavLink>
           ) : (
             <NavLink
               to="/auth"
-              className="flex items-center p-2 hover:bg-gray-800 rounded-md transition duration-200"
+              className="group flex items-center p-2 hover:bg-white rounded-md transition duration-200"
             >
-              <FaUser className="text-xl mr-2 group-hover:text-gray-300 transition duration-200" />
-              <span className="text-lg font-medium group-hover:text-gray-300">
+              <FaUser className="text-xl mr-2 group-hover:text-black transition duration-200" />
+              <span className="text-lg font-medium group-hover:text-black">
                 Login
               </span>
             </NavLink>

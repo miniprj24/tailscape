@@ -11,8 +11,8 @@ export default [
     languageOptions: {
       ecmaVersion: 'latest',
       globals: {
-        ...globals.browser, // Include browser globals
-        ...globals.node,    // Include Node.js globals
+        ...globals.browser,
+        ...globals.node,
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },

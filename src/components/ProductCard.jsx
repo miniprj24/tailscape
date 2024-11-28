@@ -19,7 +19,7 @@ export default function ProductCard({ name, price, image }) {
           {name || 'Unnamed Product'}
         </h3>
         <p className="text-blue-600 font-bold">${formattedPrice}</p>
-        <Button className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors">
+        <Button classes="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors duration-300">
           Add to Cart
         </Button>
       </div>
