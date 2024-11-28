@@ -12,7 +12,7 @@ function App() {
       <Provider store={store}>
         <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 transition-all duration-300">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow">        
             <PageRoutes />
           </main>
           <Footer />
