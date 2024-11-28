@@ -93,7 +93,7 @@ export default function PetsPage() {
                 <CardContent>
                   <CardTitle>{pet.name}</CardTitle>
                   <p>{pet.species} - {pet.breed}</p>
-                  <p>Age: {pet.age} years</p>
+                  <p>Age: {pet.age} </p>
                   <p className="font-bold mt-2">{pet.currency} {pet.price}</p>
                 </CardContent>
                 <CardFooter>
@@ -106,7 +106,6 @@ export default function PetsPage() {
           </div>
         )}
       </main>
-      <Footer />
     </div>
   );
 }

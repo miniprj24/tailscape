@@ -12,6 +12,7 @@ import ServicesPage from '../router/views/ServicePage'
 import AboutPage from '../router/views/About'
 import ContactPage from '../router/views/Contact'
 
+
 const PageRoutes = () => {
     return (
         <Routes>
@@ -26,6 +27,7 @@ const PageRoutes = () => {
             <Route path="/dashboard" element={<UserDashboard />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/auth" element={<AuthPage />} />
+            
         </Routes>
     )
 }
