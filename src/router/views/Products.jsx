@@ -3,12 +3,9 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../../store/cartSlice';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-
-const Spinner = () => (
-  <div className="flex justify-center items-center h-64">
-    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
+import { Button } from '../../components/ui/Button';
+import Spinner from '../../components/ui/Spinner';
+import FadeInOnScroll from '../../utilities/FadeInOnScroll';
 
 const ProductCard = ({ product, onAddToCart }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -18,7 +15,7 @@ const ProductCard = ({ product, onAddToCart }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300 transform hover:scale-105"
     >
       <div className="relative w-full h-48">
         {!imageLoaded && (
@@ -27,9 +24,8 @@ const ProductCard = ({ product, onAddToCart }) => {
         <img
           src={product.images[0] || '/placeholder.svg'}
           alt={product.name}
-          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-            imageLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`w-full h-full object-contain rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
           loading="lazy"
           onLoad={() => setImageLoaded(true)}
         />
@@ -39,12 +35,12 @@ const ProductCard = ({ product, onAddToCart }) => {
         <p className="text-gray-600 mb-2">
           {product.currency} {product.price}
         </p>
-        <button
-          onClick={() => onAddToCart(product)}
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors duration-300"
+        <Button
+          clickEvent={() => onAddToCart(product)}
+          classes="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors duration-300"
         >
           Add to Cart
-        </button>
+        </Button>
       </div>
     </motion.div>
   );
@@ -99,47 +95,54 @@ const Products = () => {
     });
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Our Products</h1>
-      <div className="flex justify-between mb-6">
-        <div className="space-x-2">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setFilterCategory(category)}
-              className={`px-4 py-2 rounded ${
-                filterCategory === category
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200'
-              }`}
+    <FadeInOnScroll>
+      <div className="container mx-auto px-4 py-8 bg-gradient-to-b from-blue-50 to-blue-200">
+        <h1 className="text-3xl font-bold text-center mb-8">Our Products</h1>
+        <div className="flex justify-between items-center mb-6">
+          {/* Categories */}
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category, index) => (
+              <Button
+                key={index}
+                buttonKey={category}
+                clickEvent={() => setFilterCategory(category)}
+                classes={`px-4 py-2 rounded-md transition-all duration-200 shadow-sm ${filterCategory === category
+                    ? 'bg-blue-500 text-white hover:bg-blue-600'
+                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                  }`}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </Button>
+            ))}
+          </div>
+
+          {/* Sorting Dropdown */}
+          <div className="flex items-center">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 hover:border-gray-400 transition duration-200"
             >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </button>
-          ))}
+              <option value="name">Sort by Name</option>
+              <option value="price">Sort by Price</option>
+            </select>
+          </div>
         </div>
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-          className="border rounded p-2"
-        >
-          <option value="name">Sort by Name</option>
-          <option value="price">Sort by Price</option>
-        </select>
+        {loading ? (
+          <Spinner /> // Show spinner while loading
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {sortedAndFilteredProducts.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </div>
+        )}
       </div>
-      {loading ? (
-        <Spinner /> // Show spinner while loading
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {sortedAndFilteredProducts.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-              onAddToCart={handleAddToCart}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    </FadeInOnScroll>
   );
 };
 
