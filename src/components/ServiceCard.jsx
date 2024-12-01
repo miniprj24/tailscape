@@ -1,11 +1,4 @@
-import {
-  FaStethoscope,
-  FaCut,
-  FaGraduationCap,
-  FaHome,
-  FaUser,
-  FaHeart,
-} from 'react-icons/fa';
+import { FaStethoscope, FaCut, FaGraduationCap, FaHome, FaUser, FaHeart } from 'react-icons/fa';
 
 const iconMap = {
   stethoscope: FaStethoscope,

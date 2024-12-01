@@ -11,7 +11,7 @@ const Services = () => {
       link: '/pets',
       imgSrc: 'src/images/animals.jpg',
       imgAlt: 'Buying Animals',
-      buttonTitle: 'Explore Pets'
+      buttonTitle: 'Explore Pets',
     },
     {
       title: 'Animal-Related Products',
@@ -20,7 +20,7 @@ const Services = () => {
       link: '/products',
       imgSrc: 'src/images/products.jpg',
       imgAlt: 'Animal Products',
-      buttonTitle: 'Shop Products'
+      buttonTitle: 'Shop Products',
     },
     {
       title: 'Book Store Appointment',
@@ -29,7 +29,7 @@ const Services = () => {
       link: '/StoreAppointment',
       imgSrc: 'src/images/store-appointment.jpg',
       imgAlt: 'Store Appointment',
-      buttonTitle: 'Book Now'
+      buttonTitle: 'Book Now',
     },
     {
       title: 'Veterinary Appointment',
@@ -38,7 +38,7 @@ const Services = () => {
       link: '/vet-appointment',
       imgSrc: 'src/images/vet-appointment.jpg',
       imgAlt: 'Veterinary Appointment',
-      buttonTitle: 'Book Now'
+      buttonTitle: 'Book Now',
     },
   ];
 
@@ -48,8 +48,10 @@ const Services = () => {
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl font-extrabold text-black mb-6">Our Services</h1>
           <p className="text-lg text-gray-800 mb-12 max-w-3xl mx-auto">
-            Everything your pet needs, all in one place! From finding the perfect furry companion to shopping for high-quality pet products,
-            we’ve got you covered. Whether it’s expert veterinary care or personalized in-store guidance, our services are designed to ensure the health, happiness, and comfort of your beloved pets.
+            Everything your pet needs, all in one place! From finding the perfect furry companion to
+            shopping for high-quality pet products, we’ve got you covered. Whether it’s expert
+            veterinary care or personalized in-store guidance, our services are designed to ensure
+            the health, happiness, and comfort of your beloved pets.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

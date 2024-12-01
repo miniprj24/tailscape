@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import {
-  CalendarIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ClockIcon,
-} from '@heroicons/react/24/solid';
+import { CalendarIcon, CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
 import { Dog, Cat, Bird, PawPrint } from 'lucide-react';
 import Carousel from '../../components/Carousel';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
-
 
 const petIcons = {
   dog: Dog,
@@ -112,10 +106,11 @@ const VetAppointment = () => {
                 {doctors.map((doctor) => (
                   <div key={doctor.id} className="h-full relative z-0 py-4">
                     <div
-                      className={`flex flex-col items-center p-4 border rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:z-10 h-full ${selectedDoctor && selectedDoctor.id === doctor.id
+                      className={`flex flex-col items-center p-4 border rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:z-10 h-full ${
+                        selectedDoctor && selectedDoctor.id === doctor.id
                           ? 'bg-blue-100 border-blue-500'
                           : 'hover:bg-blue-50'
-                        }`}
+                      }`}
                       onClick={() => setSelectedDoctor(doctor)}
                     >
                       <img
@@ -124,7 +119,9 @@ const VetAppointment = () => {
                         className="w-24 h-24 rounded-full object-cover mb-4"
                       />
                       <h3 className="font-semibold text-blue-800 text-xl mb-2">{doctor.name}</h3>
-                      <p className="text-sm text-gray-600 mb-2">Specializing in {doctor.specialty}</p>
+                      <p className="text-sm text-gray-600 mb-2">
+                        Specializing in {doctor.specialty}
+                      </p>
                       <ul className="text-xs text-gray-500">
                         <li>Breeds: {doctor.breeds.join(', ')}</li>
                       </ul>
@@ -134,7 +131,10 @@ const VetAppointment = () => {
               </Carousel>
 
               {selectedDoctor && (
-                <form onSubmit={handleBookAppointment} className="grid grid-cols-2 gap-4 max-w-2xl mx-auto p-4 mt-8">
+                <form
+                  onSubmit={handleBookAppointment}
+                  className="grid grid-cols-2 gap-4 max-w-2xl mx-auto p-4 mt-8"
+                >
                   <div className="relative">
                     <input
                       type="date"
@@ -232,46 +232,35 @@ const VetAppointment = () => {
                 {appointments.map((appointment) => {
                   const PetIcon = petIcons[appointment.petType.toLowerCase()];
                   return (
-                    <li
-                      key={appointment.id}
-                      className="py-4 flex items-center justify-between"
-                    >
+                    <li key={appointment.id} className="py-4 flex items-center justify-between">
                       <div className="flex items-center">
                         {PetIcon && (
-                          <PetIcon
-                            className="h-6 w-6 text-blue-500 mr-3"
-                            aria-hidden="true"
-                          />
+                          <PetIcon className="h-6 w-6 text-blue-500 mr-3" aria-hidden="true" />
                         )}
                         <span className="text-sm font-medium text-gray-900">
-                          {new Date(appointment.date).toLocaleDateString(
-                            'en-US',
-                            {
-                              weekday: 'long',
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            }
-                          )}{' '}
-                          at {appointment.time} - {appointment.petType} (
-                          {appointment.breed}) with {appointment.doctor}
+                          {new Date(appointment.date).toLocaleDateString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}{' '}
+                          at {appointment.time} - {appointment.petType} ({appointment.breed}) with{' '}
+                          {appointment.doctor}
                         </span>
                       </div>
                       <div className="flex items-center">
                         <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${appointment.status === 'approved'
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            appointment.status === 'approved'
                               ? 'bg-green-100 text-green-800'
                               : appointment.status === 'denied'
                                 ? 'bg-red-100 text-red-800'
                                 : 'bg-yellow-100 text-yellow-800'
-                            }`}
+                          }`}
                         >
-                          {appointment.status.charAt(0).toUpperCase() +
-                            appointment.status.slice(1)}
+                          {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                         </span>
-                        <div className="ml-2">
-                          {getStatusIcon(appointment.status)}
-                        </div>
+                        <div className="ml-2">{getStatusIcon(appointment.status)}</div>
                       </div>
                     </li>
                   );
@@ -286,4 +275,3 @@ const VetAppointment = () => {
 };
 
 export default VetAppointment;
-

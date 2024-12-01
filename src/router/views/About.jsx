@@ -1,4 +1,4 @@
-import FadeInOnScroll from "../../utilities/FadeInOnScroll";
+import FadeInOnScroll from '../../utilities/FadeInOnScroll';
 
 export default function AboutPage() {
   return (
@@ -19,21 +19,19 @@ export default function AboutPage() {
             <div>
               <h2 className="text-2xl font-semibold mb-4">Our Story</h2>
               <p className="mb-4">
-                TailScape was founded in 2024 with a simple mission: to provide
-                the best care and products for pets and their owners. Our passion
-                for animals drives everything we do, from selecting the highest
-                quality products to offering expert advice and services.
+                TailScape was founded in 2024 with a simple mission: to provide the best care and
+                products for pets and their owners. Our passion for animals drives everything we do,
+                from selecting the highest quality products to offering expert advice and services.
               </p>
               <p className="mb-4">
-                We believe that pets are family, and they deserve the very best.
-                That's why we work tirelessly to source eco-friendly, sustainable,
-                and innovative products that enhance the lives of pets and their
-                owners.
+                We believe that pets are family, and they deserve the very best. That's why we work
+                tirelessly to source eco-friendly, sustainable, and innovative products that enhance
+                the lives of pets and their owners.
               </p>
               <p>
-                Our team of experienced pet lovers is always here to help you find
-                the perfect solution for your furry, feathered, or scaly friend.
-                We're more than just a platform - we're your partners in pet care.
+                Our team of experienced pet lovers is always here to help you find the perfect
+                solution for your furry, feathered, or scaly friend. We're more than just a platform
+                - we're your partners in pet care.
               </p>
             </div>
           </div>

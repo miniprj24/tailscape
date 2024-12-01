@@ -30,7 +30,7 @@ const data = [
 export default function AdminDashboard() {
   const user = useSelector((state) => state.auth.user);
 
-  if (!user || user.role !== 'admin') {
+  if (!user || user.role !== 'Admin') {
     return <div>Access denied. Admin privileges required.</div>;
   }
 

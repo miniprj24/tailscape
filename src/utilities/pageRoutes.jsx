@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Home from '../router/views/Home';
 import Products from '../router/views/Products';
 import CartPage from '../router/views/Cart';
@@ -13,24 +14,89 @@ import AboutPage from '../router/views/About';
 import ContactPage from '../router/views/Contact';
 import AppointmentsPage from '../router/views/Appointments';
 import StoreAppointments from '../router/views/StoreAppointment';
-import VetAppointments from '../router/views/VetAppointment' ;
+import VetAppointments from '../router/views/VetAppointment';
+
 const PageRoutes = () => {
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const ProtectedRoute = ({ children, role }) => {
+    if (!isAuthenticated) {
+      return <Navigate to="/auth" />;
+    }
+    if (role && user?.role !== role) {
+      return <Navigate to="/" />;
+    }
+    return children;
+  };
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/products" element={<Products />} />
-      <Route path="/pets" element={<PetsPage />} />
-      <Route path="/cart" element={<CartPage />} />
-      <Route path="/services" element={<ServicesPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/dashboard" element={<UserDashboard />} />
-      <Route path="/admin" element={<AdminDashboard />} />
+      {/* Public Routes */}
       <Route path="/auth" element={<AuthPage />} />
-      <Route path="/AppointmentsPage" element={<AppointmentsPage />} />
-      <Route path="/StoreAppointment" element={<StoreAppointments />} />
-      <Route path="/vet-appointment" element={<VetAppointments />} />
+
+      {/* Restricted Public Routes */}
+      {user?.role !== 'Admin' && (
+        <>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/pets" element={<PetsPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          {/* <Route path="/appointments" element={<AppointmentsPage />} /> */}
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            }
+          />
+        </>
+      )}
+
+      {/* Protected Routes */}
+      <Route
+        path="/appointments"
+        element={
+          <ProtectedRoute>
+            <AppointmentsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/store-appointment"
+        element={
+          <ProtectedRoute>
+            <StoreAppointments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/vet-appointment"
+        element={
+          <ProtectedRoute>
+            <VetAppointments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute role="User">
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute role="Admin">
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

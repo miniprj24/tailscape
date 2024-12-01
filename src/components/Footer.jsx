@@ -1,9 +1,16 @@
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
+  const auth = useSelector((state) => state.auth);
+
+  // Determine theme based on user role
+  const isAdmin = auth.user?.role === 'Admin';
+  const theme = isAdmin ? 'from-red-700 to-red-500' : 'from-blue-700 to-blue-500';
+
   return (
-    <footer className="bg-gradient-to-t from-blue-700 to-blue-500 text-white shadow-md py-6">
+    <footer className={`bg-gradient-to-t ${theme} text-white shadow-md py-6`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <div>
@@ -11,25 +18,31 @@ export default function Footer() {
             <p className="text-sm">Your trusted partner in pet care and products.</p>
           </div>
 
-          {/* Links Section */}
           <div className="mt-4 md:mt-0 flex justify-center w-full md:w-auto">
             <ul className="space-x-5 flex justify-left md:justify-start">
               <li>
-                <NavLink to="/products" className="text-sm hover:text-blue-300">Products</NavLink>
+                <NavLink to="/products" className="text-sm hover:text-blue-300">
+                  Products
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/services" className="text-sm hover:text-blue-300">Services</NavLink>
+                <NavLink to="/services" className="text-sm hover:text-blue-300">
+                  Services
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/about" className="text-sm hover:text-blue-300">About Us</NavLink>
+                <NavLink to="/about" className="text-sm hover:text-blue-300">
+                  About Us
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/contact" className="text-sm hover:text-blue-300">Contact</NavLink>
+                <NavLink to="/contact" className="text-sm hover:text-blue-300">
+                  Contact
+                </NavLink>
               </li>
             </ul>
           </div>
 
-          {/* Social Links */}
           <div className="mt-4 md:mt-0">
             <div className="flex justify-center space-x-6">
               <NavLink to="#" className="text-2xl hover:text-blue-300">

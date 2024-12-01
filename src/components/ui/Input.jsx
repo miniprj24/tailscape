@@ -1,10 +1,4 @@
-export function Input({
-  placeholder,
-  value,
-  onChange,
-  disabled = false,
-  width = '80%',
-}) {
+export function Input({ placeholder, value, onChange, disabled = false, width = '80%' }) {
   return (
     <input
       type="text"

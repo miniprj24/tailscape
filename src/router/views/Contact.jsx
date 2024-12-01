@@ -13,8 +13,8 @@ export default function ContactPage() {
             <div>
               <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
               <p className="mb-4">
-                We're here to help! If you have any questions, concerns, or just
-                want to say hello, please don't hesitate to reach out to us.
+                We're here to help! If you have any questions, concerns, or just want to say hello,
+                please don't hesitate to reach out to us.
               </p>
               <div className="mb-4">
                 <h3 className="font-semibold">Address:</h3>

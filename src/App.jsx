@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PageRoutes from './utilities/PageRoutes';
@@ -12,24 +10,31 @@ import 'aos/dist/aos.css';
 function App() {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Animation duration in milliseconds
-      easing: 'ease-out', // Easing for animations
-      once: true, // Whether animation should happen only once
+      duration: 1000,
+      easing: 'ease-out',
+      once: true,
     });
   }, []);
 
+  const Layout = ({ children }) => {
+    const location = useLocation();
+    const isAuthRoute = location.pathname.startsWith('/auth');
+
+    return (
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-blue-50 to-blue-200 transition-all duration-300">
+        <ScrollToTop />
+        {!isAuthRoute && <Header />}
+        <main className="flex-grow">{children}</main>
+        {!isAuthRoute && <Footer />}
+      </div>
+    );
+  };
+
   return (
     <BrowserRouter>
-      <Provider store={store}>
-        <div className="flex flex-col min-h-screen bg-gradient-to-b from-blue-50 to-blue-200 transition-all duration-300">
-          <ScrollToTop />
-          <Header />
-          <main className="flex-grow">
-            <PageRoutes />
-          </main>
-          <Footer />
-        </div>
-      </Provider>
+      <Layout>
+        <PageRoutes />
+      </Layout>
     </BrowserRouter>
   );
 }
