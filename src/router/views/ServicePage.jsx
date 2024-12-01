@@ -46,7 +46,9 @@ const Services = () => {
     <FadeInOnScroll>
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl font-extrabold text-black mb-6">Our Services</h1>
+          <h1 className="text-5xl font-extrabold text-black mb-6">
+            Our Services
+          </h1>
           <p className="text-lg text-gray-800 mb-12 max-w-3xl mx-auto">
             Everything your pet needs, all in one place! From finding the perfect furry companion to
             shopping for high-quality pet products, we’ve got you covered. Whether it’s expert
@@ -66,8 +68,12 @@ const Services = () => {
                   className="w-full h-40 object-contain rounded-t-lg mb-4"
                 />
                 <div className="p-6 flex flex-col justify-between flex-grow">
-                  <h2 className="text-2xl font-semibold text-black">{service.title}</h2>
-                  <p className="text-gray-900 mt-2 mb-4">{service.description}</p>
+                  <h2 className="text-2xl font-semibold text-black">
+                    {service.title}
+                  </h2>
+                  <p className="text-gray-900 mt-2 mb-4">
+                    {service.description}
+                  </p>
                   <Link
                     to={service.link}
                     className="inline-block bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"

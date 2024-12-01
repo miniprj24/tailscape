@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import PageRoutes from './utilities/PageRoutes';
 import ScrollToTop from './utilities/ScrollToTop';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import PageRoutes from './utilities/pageRoutes';
+import { useSelector } from 'react-redux';
 
 function App() {
   useEffect(() => {
@@ -16,12 +17,20 @@ function App() {
     });
   }, []);
 
+  const auth = useSelector((state) => state.auth);
+
   const Layout = ({ children }) => {
     const location = useLocation();
     const isAuthRoute = location.pathname.startsWith('/auth');
 
+    // Set theme based on user role
+    const isAdmin = auth?.user?.role === 'Admin';
+    const gradientClass = isAdmin
+      ? 'bg-gradient-to-b from-red-50 to-red-200'
+      : 'bg-gradient-to-b from-blue-50 to-blue-200';
+
     return (
-      <div className="flex flex-col min-h-screen bg-gradient-to-b from-blue-50 to-blue-200 transition-all duration-300">
+      <div className={`flex flex-col min-h-screen transition-all duration-300 ${gradientClass}`}>
         <ScrollToTop />
         {!isAuthRoute && <Header />}
         <main className="flex-grow">{children}</main>

@@ -15,7 +15,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <div>
             <h3 className="text-lg font-semibold mb-2">TailScape</h3>
-            <p className="text-sm">Your trusted partner in pet care and products.</p>
+            <p className="text-sm">
+              Your trusted partner in pet care and products.
+            </p>
           </div>
 
           <div className="mt-4 md:mt-0 flex justify-center w-full md:w-auto">

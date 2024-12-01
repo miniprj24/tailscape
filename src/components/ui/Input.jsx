@@ -1,14 +1,17 @@
-export function Input({ placeholder, value, onChange, disabled = false, width = '80%' }) {
+export function Input({ type, placeholder, name, value, onChange, width = 'w-4/5' }) {
+  const isNumber = type === 'number'; // Check if the type is number
+
   return (
     <input
-      type="text"
-      className={`w-[${width}] px-4 py-2 text-gray-700 border rounded-sm 
-          ${disabled ? 'bg-gray-100 border-gray-300 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'}
-          focus:outline-none focus:ring-2 transition duration-300`}
+      type={type}
       placeholder={placeholder}
+      name={name}
       value={value}
       onChange={onChange}
-      disabled={disabled}
+      className={`px-4 py-2 text-gray-700 border rounded-sm 
+        ${width} 
+        focus:outline-none focus:ring-2 transition duration-300
+        ${isNumber ? 'appearance-none' : ''}`} // Remove the spinner if the type is number
     />
   );
 }

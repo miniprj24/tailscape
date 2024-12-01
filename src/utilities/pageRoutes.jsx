@@ -33,6 +33,8 @@ const PageRoutes = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/auth" element={<AuthPage />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/pets" element={<PetsPage />} />
 
       {/* Restricted Public Routes */}
       {user?.role !== 'Admin' && (
@@ -40,11 +42,8 @@ const PageRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/services" element={<ServicesPage />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/pets" element={<PetsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          {/* <Route path="/appointments" element={<AppointmentsPage />} /> */}
           <Route
             path="/checkout"
             element={
