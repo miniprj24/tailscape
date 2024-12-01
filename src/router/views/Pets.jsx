@@ -22,9 +22,7 @@ export default function PetsPage() {
     const fetchPets = async () => {
       try {
         setLoading(true); // Show loading spinner
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/pets`
-        ); // Replace with your API endpoint
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/pets`); // Replace with your API endpoint
         const data = await response.json();
 
         if (Array.isArray(data.pet)) {
@@ -81,26 +79,45 @@ export default function PetsPage() {
             </select>
           </div>
           {loading ? (
-            <Spinner /> // Show spinner while loading
+            <Spinner />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAndSortedPets.map((pet) => (
                 <Card key={pet._id}>
                   <CardHeader>
-                    <img src={pet.images[0] || '/placeholder.svg'} alt={pet.name} width={200} height={200} className="w-full h-48 object-contain rounded-t-lg" />
+                    <img
+                      src={pet.images[0] || '/placeholder.svg'}
+                      alt={pet.name}
+                      width={200}
+                      height={200}
+                      className="w-full h-48 object-contain rounded-t-lg"
+                    />
                   </CardHeader>
                   <CardContent>
                     <CardTitle>{pet.name}</CardTitle>
                     <p>
                       {pet.species} - {pet.breed}
                     </p>
-                    <p>Age: {pet.age} years</p>
+                    <p>Age: {pet.age} </p>
                     <p className="font-bold mt-2">
                       {pet.currency} {pet.price}
                     </p>
                   </CardContent>
                   <CardFooter>
-                    <Button classes={`px-3 py-2 rounded bg-black text-white hover:bg-gray-800`} clickEvent={() => dispatch(addToCart({ id: pet.id, name: pet.name, price: pet.price, quantity: 1, image: pet.images[0] }))}>
+                    <Button
+                      classes={`px-3 py-2 rounded bg-black text-white hover:bg-gray-800`}
+                      clickEvent={() =>
+                        dispatch(
+                          addToCart({
+                            id: pet.id,
+                            name: pet.name,
+                            price: pet.price,
+                            quantity: 1,
+                            image: pet.images[0],
+                          })
+                        )
+                      }
+                    >
                       Add to Cart
                     </Button>
                   </CardFooter>

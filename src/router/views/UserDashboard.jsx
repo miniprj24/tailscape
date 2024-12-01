@@ -18,9 +18,7 @@ export default function UserDashboard() {
     <FadeInOnScroll>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
         <main className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-8">
-            Welcome, {user.name}!
-          </h1>
+          <h1 className="text-3xl font-bold text-center mb-8">Welcome, {user?.name}!</h1>
           <div className="grid md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
@@ -28,10 +26,10 @@ export default function UserDashboard() {
               </CardHeader>
               <CardContent>
                 <p>
-                  <strong>Name:</strong> {user.name}
+                  <strong>Name:</strong> {user?.name}
                 </p>
                 <p>
-                  <strong>Email:</strong> {user.email}
+                  <strong>Email:</strong> {user?.email}
                 </p>
                 <Button className="mt-4">Edit Profile</Button>
               </CardContent>

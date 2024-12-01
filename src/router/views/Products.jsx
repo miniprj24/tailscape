@@ -24,8 +24,9 @@ const ProductCard = ({ product, onAddToCart }) => {
         <img
           src={product.images[0] || '/placeholder.svg'}
           alt={product.name}
-          className={`w-full h-full object-contain rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
+          className={`w-full h-full object-contain rounded-lg transition-opacity duration-300 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
           loading="lazy"
           onLoad={() => setImageLoaded(true)}
         />
@@ -51,16 +52,14 @@ const Products = () => {
   const [categories, setCategories] = useState(['All']);
   const [sortBy, setSortBy] = useState('name');
   const [filterCategory, setFilterCategory] = useState('All');
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true); // Show spinner
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/products`
-        ); // Replace with your API endpoint
+        setLoading(true);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`);
         const fetchedProducts = response.data.products;
 
         const uniqueCategories = [
@@ -73,7 +72,7 @@ const Products = () => {
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
-        setLoading(false); // Hide spinner
+        setLoading(false);
       }
     };
 
@@ -85,10 +84,7 @@ const Products = () => {
   };
 
   const sortedAndFilteredProducts = products
-    .filter(
-      (product) =>
-        filterCategory === 'All' || product.pet_type === filterCategory
-    )
+    .filter((product) => filterCategory === 'All' || product.pet_type === filterCategory)
     .sort((a, b) => {
       if (sortBy === 'price') return a.price - b.price;
       return a.name.localeCompare(b.name);
@@ -99,24 +95,23 @@ const Products = () => {
       <div className="container mx-auto px-4 py-8 bg-gradient-to-b from-blue-50 to-blue-200">
         <h1 className="text-3xl font-bold text-center mb-8">Our Products</h1>
         <div className="flex justify-between items-center mb-6">
-          {/* Categories */}
           <div className="flex flex-wrap gap-3">
             {categories.map((category, index) => (
               <Button
                 key={index}
                 buttonKey={category}
                 clickEvent={() => setFilterCategory(category)}
-                classes={`px-4 py-2 rounded-md transition-all duration-200 shadow-sm ${filterCategory === category
+                classes={`px-4 py-2 rounded-md transition-all duration-200 shadow-sm ${
+                  filterCategory === category
                     ? 'bg-blue-500 text-white hover:bg-blue-600'
                     : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                  }`}
+                }`}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </Button>
             ))}
           </div>
 
-          {/* Sorting Dropdown */}
           <div className="flex items-center">
             <select
               value={sortBy}
@@ -129,15 +124,11 @@ const Products = () => {
           </div>
         </div>
         {loading ? (
-          <Spinner /> // Show spinner while loading
+          <Spinner />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {sortedAndFilteredProducts.map((product) => (
-              <ProductCard
-                key={product._id}
-                product={product}
-                onAddToCart={handleAddToCart}
-              />
+              <ProductCard key={product._id} product={product} onAddToCart={handleAddToCart} />
             ))}
           </div>
         )}

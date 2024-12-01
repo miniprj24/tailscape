@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  CalendarIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ClockIcon,
-} from '@heroicons/react/24/solid';
+import { CalendarIcon, CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
 import { PawPrint, Dog, Cat, Bird } from 'lucide-react';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
 
@@ -100,7 +95,6 @@ export default function PetStoreBookingPage() {
                 onSubmit={handleBookAppointment}
                 className="grid grid-cols-2 gap-4 max-w-2xl mx-auto p-4"
               >
-                {/* Date Picker */}
                 <div className="relative">
                   <input
                     type="date"
@@ -114,7 +108,6 @@ export default function PetStoreBookingPage() {
                   </label>
                 </div>
 
-                {/* Time Picker */}
                 <div className="relative">
                   <input
                     type="time"
@@ -128,13 +121,12 @@ export default function PetStoreBookingPage() {
                   </label>
                 </div>
 
-                {/* Pet Type Dropdown */}
                 <div className="relative">
                   <select
                     value={newPetType}
                     onChange={(e) => {
                       setNewPetType(e.target.value);
-                      setNewBreed(''); // Reset breed when pet type changes
+                      setNewBreed('');
                     }}
                     className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
                     required
@@ -149,7 +141,6 @@ export default function PetStoreBookingPage() {
                   </label>
                 </div>
 
-                {/* Breed Dropdown or Text Input */}
                 <div className="relative">
                   {newPetType === 'Other' ? (
                     <input
@@ -179,8 +170,6 @@ export default function PetStoreBookingPage() {
                     {newPetType === 'Other' ? 'Breed (Specify)' : 'Breed'}
                   </label>
                 </div>
-
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="col-span-2 w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
@@ -201,46 +190,34 @@ export default function PetStoreBookingPage() {
                 {appointments.map((appointment) => {
                   const PetIcon = petIcons[appointment.petType.toLowerCase()];
                   return (
-                    <li
-                      key={appointment.id}
-                      className="py-4 flex items-center justify-between"
-                    >
+                    <li key={appointment.id} className="py-4 flex items-center justify-between">
                       <div className="flex items-center">
                         {PetIcon && (
-                          <PetIcon
-                            className="h-6 w-6 text-blue-500 mr-3"
-                            aria-hidden="true"
-                          />
+                          <PetIcon className="h-6 w-6 text-blue-500 mr-3" aria-hidden="true" />
                         )}
                         <span className="text-sm font-medium text-gray-900">
-                          {new Date(appointment.date).toLocaleDateString(
-                            'en-US',
-                            {
-                              weekday: 'long',
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            }
-                          )}{' '}
-                          at {appointment.time} - {appointment.petType} (
-                          {appointment.breed})
+                          {new Date(appointment.date).toLocaleDateString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}{' '}
+                          at {appointment.time} - {appointment.petType} ({appointment.breed})
                         </span>
                       </div>
                       <div className="flex items-center">
                         <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${appointment.status === 'approved'
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            appointment.status === 'approved'
                               ? 'bg-green-100 text-green-800'
                               : appointment.status === 'denied'
                                 ? 'bg-red-100 text-red-800'
                                 : 'bg-yellow-100 text-yellow-800'
-                            }`}
+                          }`}
                         >
-                          {appointment.status.charAt(0).toUpperCase() +
-                            appointment.status.slice(1)}
+                          {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                         </span>
-                        <div className="ml-2">
-                          {getStatusIcon(appointment.status)}
-                        </div>
+                        <div className="ml-2">{getStatusIcon(appointment.status)}</div>
                       </div>
                     </li>
                   );

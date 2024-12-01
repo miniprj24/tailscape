@@ -11,7 +11,6 @@ export default function AppointmentsPage() {
             Book Your Pet Appointment
           </h1>
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Store Visit Appointment Box */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-500 hover:scale-105">
               <div className="p-6">
                 <div className="flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full mx-auto mb-4">
@@ -21,19 +20,16 @@ export default function AppointmentsPage() {
                   Visit Our Pet Store
                 </h2>
                 <p className="text-gray-600 text-center mb-6">
-                  Book an appointment to visit our store and find your perfect pet
-                  companion.
+                  Book an appointment to visit our store and find your perfect pet companion.
                 </p>
                 <Link
-                  to="/StoreAppointment"
+                  to="/store-appointment"
                   className="block w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300"
                 >
                   Book Store Visit
                 </Link>
               </div>
             </div>
-
-            {/* Veterinary Appointment Box */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-500 hover:scale-105">
               <div className="p-6">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-500 rounded-full mx-auto mb-4">

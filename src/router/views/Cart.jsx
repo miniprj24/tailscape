@@ -7,10 +7,7 @@ export default function CartPage() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <FadeInOnScroll>
@@ -23,10 +20,7 @@ export default function CartPage() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="md:col-span-2">
                 {cartItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between border-b py-4"
-                  >
+                  <div key={item.id} className="flex items-center justify-between border-b py-4">
                     <div className="flex items-center">
                       <img
                         src={item.image}
@@ -37,7 +31,9 @@ export default function CartPage() {
                       />
                       <div>
                         <h3 className="font-semibold">{item.name}</h3>
-                        <p>{item.currency} {item.price.toFixed(2)}</p>
+                        <p>
+                          {item.currency} {item.price.toFixed(2)}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center">
@@ -55,7 +51,10 @@ export default function CartPage() {
                         }
                         className="w-16 mr-4"
                       />
-                      <Button variant="destructive" clickEvent={() => dispatch(removeFromCart(item.id))}>
+                      <Button
+                        variant="destructive"
+                        clickEvent={() => dispatch(removeFromCart(item.id))}
+                      >
                         Remove
                       </Button>
                     </div>

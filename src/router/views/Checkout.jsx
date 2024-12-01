@@ -23,15 +23,10 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically process the payment and create the order
     console.log('Order submitted:', formData);
-    // Reset form or redirect to a confirmation page
   };
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <FadeInOnScroll>
@@ -45,10 +40,7 @@ const Checkout = () => {
           >
             <h2 className="text-2xl font-semibold mb-4">Your Order</h2>
             {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex justify-between items-center mb-2"
-              >
+              <div key={item.id} className="flex justify-between items-center mb-2">
                 <span>
                   {item.name} x {item.quantity}
                 </span>
