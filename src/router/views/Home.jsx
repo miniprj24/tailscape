@@ -12,7 +12,9 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/products`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/products`
+        );
         const data = await response.json();
 
         const shuffled = data.products.sort(() => 0.5 - Math.random());

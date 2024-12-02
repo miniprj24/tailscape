@@ -39,7 +39,8 @@ export default function AppointmentsPage() {
                   Veterinary Services
                 </h2>
                 <p className="text-gray-600 text-center mb-6">
-                  Schedule a veterinary appointment for your pet's health, care, and well-being.
+                  Schedule a veterinary appointment for your pet's health, care,
+                  and well-being.
                 </p>
                 <Link
                   to="/vet-appointment"

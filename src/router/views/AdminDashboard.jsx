@@ -38,7 +38,9 @@ export default function AdminDashboard() {
     <FadeInOnScroll>
       <div className="min-h-screen bg-gradient-to-b from-red-50 to-red-200">
         <main className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-8">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold text-center mb-8">
+            Admin Dashboard
+          </h1>
           <div className="grid md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>

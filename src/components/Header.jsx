@@ -50,18 +50,18 @@ export default function Header() {
         {/* Navigation */}
         <nav>
           <ul className="flex space-x-6 text-lg">
+            <li>
+              <NavLink to="/products" className="hover:text-gray-300 transition duration-200">
+                Products
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/pets" className="hover:text-gray-300 transition duration-200">
+                Pets
+              </NavLink>
+            </li>
             {!isAdmin && (
               <>
-                <li>
-                  <NavLink to="/products" className="hover:text-gray-300 transition duration-200">
-                    Products
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/pets" className="hover:text-gray-300 transition duration-200">
-                    Pets
-                  </NavLink>
-                </li>
                 {auth.isAuthenticated && (
                   <li>
                     <NavLink
