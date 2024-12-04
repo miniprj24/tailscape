@@ -1,4 +1,4 @@
-import React from 'rea
+import React from 'react'
 
 const ProductCard = ({ product, onAddToCart, onRemoveFromCart, onEditProduct, isAdmin }) => {
   return (
