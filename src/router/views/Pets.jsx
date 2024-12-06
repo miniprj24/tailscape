@@ -10,11 +10,8 @@ import { CardHeader } from '../../components/ui/CardHeader';
 import { CardFooter } from '../../components/ui/CardFooter';
 import Spinner from '../../components/ui/Spinner';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
-<<<<<<< Updated upstream
 import AddPetForm from './AddPetForm';
-=======
 import axios from 'axios';
->>>>>>> Stashed changes
 
 export default function PetsPage() {
   const [pets, setPets] = useState([]);
@@ -23,24 +20,14 @@ export default function PetsPage() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-<<<<<<< Updated upstream
   const auth = useSelector((state) => state.auth);
-=======
-  useEffect(() => {
-    const fetchPets = async () => {
-      try {
-        setLoading(true); // Show loading spinner
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/api/pets`
-        ); // Replace with your API endpoint
-        const data = await response.data;
->>>>>>> Stashed changes
-
   const fetchPets = async () => {
     try {
       setLoading(true); // Show loading spinner
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/pets`); // Replace with your API endpoint
-      const data = await response.json();
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/pets`
+      ); // Replace with your API endpoint
+      const data = await response.data;
 
       if (Array.isArray(data.pet)) {
         setPets(data.pet); // Set the fetched pets data
@@ -53,7 +40,6 @@ export default function PetsPage() {
       setLoading(false); // Hide loading spinner after fetching is complete
     }
   };
-  
   useEffect(() => {
     fetchPets();
   }, []);
@@ -117,56 +103,52 @@ export default function PetsPage() {
                     <p>
                       {pet.species} - {pet.breed}
                     </p>
-<<<<<<< Updated upstream
                     <p>Age: {pet.age}</p>
-=======
-                    <p>Age: {pet.age} years</p>
->>>>>>> Stashed changes
                     <p className="font-bold mt-2">
                       {pet.currency} {pet.price}
                     </p>
-                  </CardContent>
+                  </CardContent >
                   <CardFooter>
-<<<<<<< Updated upstream
-                    {auth?.user?.role === 'Admin' ? (
-                      <Button
-                        classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
-                        clickEvent={() =>
-                          dispatch(removeFromCart(pet)) // Admin removes pet
-                        }
-                      >
-                        Remove Pet
-                      </Button>
-                    ) : (
-                      <Button
-                        classes="px-3 py-2 rounded bg-black text-white hover:bg-gray-800"
-                        clickEvent={() =>
-                          dispatch(
-                            addToCart({
-                              id: pet._id,
-                              name: pet.name,
-                              price: pet.price,
-                              quantity: 1,
-                              image: pet.images[0],
-                            })
-                          )
-                        }
-                      >
-                        Add to Cart
-                      </Button>
-                    )}
-=======
+                    {
+                      auth?.user?.role === 'Admin' ? (
+                        <Button
+                          classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
+                          clickEvent={() =>
+                            dispatch(removeFromCart(pet)) // Admin removes pet
+                          }
+                        >
+                          Remove Pet
+                        </Button>
+                      ) : (
+                        <Button
+                          classes="px-3 py-2 rounded bg-black text-white hover:bg-gray-800"
+                          clickEvent={() =>
+                            dispatch(
+                              addToCart({
+                                id: pet._id,
+                                name: pet.name,
+                                price: pet.price,
+                                quantity: 1,
+                                image: pet.images[0],
+                              })
+                            )
+                          }
+                        >
+                          Add to Cart
+                        </Button>
+                      )
+                    }
                     <Button classes={`px-3 py-2 rounded bg-black text-white hover:bg-gray-800`} clickEvent={() => dispatch(addToCart({ id: pet.id, name: pet.name, price: pet.price, quantity: 1, image: pet.images[0] }))}>
                       Add to Cart
                     </Button>
->>>>>>> Stashed changes
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+                  </CardFooter >
+                </Card >
+              ))
+              }
+            </div >
           )}
-        </main>
-      </div>
-    </FadeInOnScroll>
+        </main >
+      </div >
+    </FadeInOnScroll >
   );
 }

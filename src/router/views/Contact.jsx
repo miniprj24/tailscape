@@ -107,15 +107,8 @@ export default function ContactPage() {
 
             
             <div>
-<<<<<<< Updated upstream
-              <h2 className="text-2xl font-semibold text-black-800 mb-6">
-                Send Us a Message
-              </h2>
-              <form className="space-y-6 bg-white p-6 rounded-lg shadow-md">
-=======
               <h2 className="text-2xl font-semibold mb-4">Send Us a Message</h2>
               <form className="space-y-4" onSubmit={handleSubmit}>
->>>>>>> Stashed changes
                 <div>
                   <label
                     htmlFor="name"
@@ -127,12 +120,8 @@ export default function ContactPage() {
                     type="text"
                     id="name"
                     name="name"
-<<<<<<< Updated upstream
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-=======
                     value={formData.name}
                     onChange={handleChange}
->>>>>>> Stashed changes
                     required
                   />
                 </div>
@@ -147,12 +136,8 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     name="email"
-<<<<<<< Updated upstream
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-=======
                     value={formData.email}
                     onChange={handleChange}
->>>>>>> Stashed changes
                     required
                   />
                 </div>
@@ -167,12 +152,8 @@ export default function ContactPage() {
                     type="text"
                     id="subject"
                     name="subject"
-<<<<<<< Updated upstream
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-=======
                     value={formData.subject}
                     onChange={handleChange}
->>>>>>> Stashed changes
                     required
                   />
                 </div>
@@ -186,17 +167,6 @@ export default function ContactPage() {
                   <TextArea
                     id="message"
                     name="message"
-<<<<<<< Updated upstream
-                    rows={5}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-300 shadow-lg"
-                >
-=======
                     row={5}
                     value={formData.message}
                     onChange={(e) => handleChange({ ...e, target: { ...e.target, name: 'message' } })}
@@ -205,7 +175,6 @@ export default function ContactPage() {
                 </div>
                 <Button type="submit" 
                 classes="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-300">
->>>>>>> Stashed changes
                   Send Message
                 </Button>
               </form>

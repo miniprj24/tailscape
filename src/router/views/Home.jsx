@@ -4,11 +4,8 @@ import { FaDog, FaCat, FaFish, FaFeather } from 'react-icons/fa';
 import CategoryCard from '../../components/CategoryCard';
 import Spinner from '../../components/ui/Spinner';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
-<<<<<<< Updated upstream
 import { addToCart } from '../../store/cartSlice'; // Import addToCart action
-=======
 import axios from 'axios'; 
->>>>>>> Stashed changes
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -19,18 +16,9 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-<<<<<<< Updated upstream
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/products`
-        );
-        const data = await response.json();
-
-        const shuffled = data.products.sort(() => 0.5 - Math.random());
-=======
         const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`);
         
         const shuffled = response.data.products.sort(() => 0.5 - Math.random());
->>>>>>> Stashed changes
         const selected = shuffled.slice(0, 4);
 
         setProducts(selected);
