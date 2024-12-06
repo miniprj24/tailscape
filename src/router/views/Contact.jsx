@@ -1,9 +1,72 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Optional if you need navigation after form submission
 import { Button } from '../../components/ui/Button';
 import { TextArea } from '../../components/ui/TextArea';
 import { Input } from '../../components/ui/Input';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
+import axios from 'axios';
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
+  const [status, setStatus] = useState({ success: null, message: '' });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const endpoint = `http://localhost:5000/api/contact-message`;
+
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send the message. Please try again later.');
+      }
+
+      setStatus({
+        success: true,
+        message: 'Message sent successfully! We will get back to you soon.',
+      });
+
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+
+    } catch (error) {
+      setStatus({
+        success: false,
+        message: error.message || 'An unexpected error occurred.',
+      });
+    }
+  };
+
   return (
     <FadeInOnScroll>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
@@ -44,10 +107,15 @@ export default function ContactPage() {
 
             
             <div>
+<<<<<<< Updated upstream
               <h2 className="text-2xl font-semibold text-black-800 mb-6">
                 Send Us a Message
               </h2>
               <form className="space-y-6 bg-white p-6 rounded-lg shadow-md">
+=======
+              <h2 className="text-2xl font-semibold mb-4">Send Us a Message</h2>
+              <form className="space-y-4" onSubmit={handleSubmit}>
+>>>>>>> Stashed changes
                 <div>
                   <label
                     htmlFor="name"
@@ -59,7 +127,12 @@ export default function ContactPage() {
                     type="text"
                     id="name"
                     name="name"
+<<<<<<< Updated upstream
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+=======
+                    value={formData.name}
+                    onChange={handleChange}
+>>>>>>> Stashed changes
                     required
                   />
                 </div>
@@ -74,7 +147,12 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     name="email"
+<<<<<<< Updated upstream
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+=======
+                    value={formData.email}
+                    onChange={handleChange}
+>>>>>>> Stashed changes
                     required
                   />
                 </div>
@@ -89,7 +167,12 @@ export default function ContactPage() {
                     type="text"
                     id="subject"
                     name="subject"
+<<<<<<< Updated upstream
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+=======
+                    value={formData.subject}
+                    onChange={handleChange}
+>>>>>>> Stashed changes
                     required
                   />
                 </div>
@@ -103,6 +186,7 @@ export default function ContactPage() {
                   <TextArea
                     id="message"
                     name="message"
+<<<<<<< Updated upstream
                     rows={5}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     required
@@ -112,9 +196,28 @@ export default function ContactPage() {
                   type="submit"
                   className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-300 shadow-lg"
                 >
+=======
+                    row={5}
+                    value={formData.message}
+                    onChange={(e) => handleChange({ ...e, target: { ...e.target, name: 'message' } })}
+                    required
+                  />
+                </div>
+                <Button type="submit" 
+                classes="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-300">
+>>>>>>> Stashed changes
                   Send Message
                 </Button>
               </form>
+              {status.message && (
+                <p
+                  className={`mt-4 text-center ${
+                    status.success ? 'text-green-600' : 'text-red-600'
+                  }`}
+                >
+                  {status.message}
+                </p>
+              )}
             </div>
           </div>
         </main>

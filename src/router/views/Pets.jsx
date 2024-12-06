@@ -10,7 +10,11 @@ import { CardHeader } from '../../components/ui/CardHeader';
 import { CardFooter } from '../../components/ui/CardFooter';
 import Spinner from '../../components/ui/Spinner';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
+<<<<<<< Updated upstream
 import AddPetForm from './AddPetForm';
+=======
+import axios from 'axios';
+>>>>>>> Stashed changes
 
 export default function PetsPage() {
   const [pets, setPets] = useState([]);
@@ -19,7 +23,18 @@ export default function PetsPage() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
+<<<<<<< Updated upstream
   const auth = useSelector((state) => state.auth);
+=======
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        setLoading(true); // Show loading spinner
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/pets`
+        ); // Replace with your API endpoint
+        const data = await response.data;
+>>>>>>> Stashed changes
 
   const fetchPets = async () => {
     try {
@@ -95,25 +110,24 @@ export default function PetsPage() {
               {filteredAndSortedPets.map((pet) => (
                 <Card key={pet._id}>
                   <CardHeader>
-                    <img
-                      src={pet.images[0] || '/placeholder.svg'}
-                      alt={pet.name}
-                      width={200}
-                      height={200}
-                      className="w-full h-48 object-contain rounded-t-lg"
-                    />
+                    <img src={pet.images[0] || '/placeholder.svg'} alt={pet.name} width={200} height={200} className="w-full h-48 object-contain rounded-t-lg" />
                   </CardHeader>
                   <CardContent>
                     <CardTitle>{pet.name}</CardTitle>
                     <p>
                       {pet.species} - {pet.breed}
                     </p>
+<<<<<<< Updated upstream
                     <p>Age: {pet.age}</p>
+=======
+                    <p>Age: {pet.age} years</p>
+>>>>>>> Stashed changes
                     <p className="font-bold mt-2">
                       {pet.currency} {pet.price}
                     </p>
                   </CardContent>
                   <CardFooter>
+<<<<<<< Updated upstream
                     {auth?.user?.role === 'Admin' ? (
                       <Button
                         classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
@@ -141,6 +155,11 @@ export default function PetsPage() {
                         Add to Cart
                       </Button>
                     )}
+=======
+                    <Button classes={`px-3 py-2 rounded bg-black text-white hover:bg-gray-800`} clickEvent={() => dispatch(addToCart({ id: pet.id, name: pet.name, price: pet.price, quantity: 1, image: pet.images[0] }))}>
+                      Add to Cart
+                    </Button>
+>>>>>>> Stashed changes
                   </CardFooter>
                 </Card>
               ))}

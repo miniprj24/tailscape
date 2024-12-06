@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start:electron": "cross-env NODE_ENV=development electron .",
     "build:electron": "npm run build && electron-builder",
-    "prettier:all": "prettier --write \"src/**/*.{js,jsx,css}\""
+"prettier:all": "prettier --write \"src/**/*.{js,jsx,css}\""
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
