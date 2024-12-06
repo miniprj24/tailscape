@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FaDog, FaCat, FaFish, FaFeather } from 'react-icons/fa';
 import CategoryCard from '../../components/CategoryCard';
 import Spinner from '../../components/ui/Spinner';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
+import { addToCart } from '../../store/cartSlice'; // Import addToCart action
+import axios from 'axios'; 
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/products`
-        );
-        const data = await response.json();
-
-        const shuffled = data.products.sort(() => 0.5 - Math.random());
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`);
+        
+        const shuffled = response.data.products.sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 4);
 
         setProducts(selected);
@@ -35,6 +36,7 @@ export default function Home() {
     <FadeInOnScroll>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
         <main>
+          {/* Hero Section */}
           <section className="relative h-[45vh]">
             <img
               src="happy-pet-owner.jpg"
@@ -54,6 +56,7 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Featured Products */}
           <section className="py-16 px-6 bg-white">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
               Featured Products
@@ -70,14 +73,27 @@ export default function Home() {
                     <img
                       src={product.images[0] || '/placeholder.svg?height=200&width=200'}
                       alt={product.name}
-                      className={`w-full h-56 object-contain transition-opacity duration-300`}
+                      className="w-full h-56 object-contain transition-opacity duration-300"
                     />
                     <div className="p-4">
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
                       <p className="text-xl font-bold text-blue-600">
                         {product.currency} {product.price}
                       </p>
-                      <button className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-md w-full hover:bg-blue-700 transition duration-200">
+                      <button
+                        className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-md w-full hover:bg-blue-700 transition duration-200"
+                        onClick={() =>
+                          dispatch(
+                            addToCart({
+                              id: product._id,
+                              name: product.name,
+                              price: product.price,
+                              currency: product.currency,
+                              image: product.images[0],
+                            })
+                          )
+                        }
+                      >
                         Add to Cart
                       </button>
                     </div>
@@ -87,19 +103,17 @@ export default function Home() {
             )}
           </section>
 
-          {/* Categories */}
           <section className="py-16 px-6 bg-blue-50">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Shop by Category</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <CategoryCard name="Dogs" icon={<FaDog className="text-4xl text-blue-600" />} />
               <CategoryCard name="Cats" icon={<FaCat className="text-4xl text-yellow-600" />} />
               <CategoryCard name="Fish" icon={<FaFish className="text-4xl text-green-600" />} />
-              <CategoryCard
-                name="Birds"
-                icon={<FaFeather className="text-4xl text-purple-600" />}
-              />
+              <CategoryCard name="Birds" icon={<FaFeather className="text-4xl text-purple-600" />} />
             </div>
           </section>
+
+          {/* Special Offers */}
           <section className="py-16 px-6 bg-white">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Special Offers</h2>
             <div className="flex overflow-x-auto space-x-6 pb-4">

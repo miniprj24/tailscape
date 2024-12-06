@@ -11,6 +11,7 @@ import { CardFooter } from '../../components/ui/CardFooter';
 import Spinner from '../../components/ui/Spinner';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
 import AddPetForm from './AddPetForm';
+import axios from 'axios';
 
 export default function PetsPage() {
   const [pets, setPets] = useState([]);
@@ -20,12 +21,13 @@ export default function PetsPage() {
   const dispatch = useDispatch();
 
   const auth = useSelector((state) => state.auth);
-
   const fetchPets = async () => {
     try {
       setLoading(true); // Show loading spinner
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/pets`); // Replace with your API endpoint
-      const data = await response.json();
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/pets`
+      ); // Replace with your API endpoint
+      const data = await response.data;
 
       if (Array.isArray(data.pet)) {
         setPets(data.pet); // Set the fetched pets data
@@ -38,7 +40,6 @@ export default function PetsPage() {
       setLoading(false); // Hide loading spinner after fetching is complete
     }
   };
-  
   useEffect(() => {
     fetchPets();
   }, []);
@@ -91,17 +92,11 @@ export default function PetsPage() {
           {loading ? (
             <Spinner />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredAndSortedPets.map((pet) => (
                 <Card key={pet._id}>
                   <CardHeader>
-                    <img
-                      src={pet.images[0] || '/placeholder.svg'}
-                      alt={pet.name}
-                      width={200}
-                      height={200}
-                      className="w-full h-48 object-contain rounded-t-lg"
-                    />
+                    <img src={pet.images[0] || '/placeholder.svg'} alt={pet.name} width={200} height={200} className="w-full h-48 object-contain rounded-t-lg" />
                   </CardHeader>
                   <CardContent>
                     <CardTitle>{pet.name}</CardTitle>
@@ -112,42 +107,48 @@ export default function PetsPage() {
                     <p className="font-bold mt-2">
                       {pet.currency} {pet.price}
                     </p>
-                  </CardContent>
+                  </CardContent >
                   <CardFooter>
-                    {auth?.user?.role === 'Admin' ? (
-                      <Button
-                        classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
-                        clickEvent={() =>
-                          dispatch(removeFromCart(pet)) // Admin removes pet
-                        }
-                      >
-                        Remove Pet
-                      </Button>
-                    ) : (
-                      <Button
-                        classes="px-3 py-2 rounded bg-black text-white hover:bg-gray-800"
-                        clickEvent={() =>
-                          dispatch(
-                            addToCart({
-                              id: pet._id,
-                              name: pet.name,
-                              price: pet.price,
-                              quantity: 1,
-                              image: pet.images[0],
-                            })
-                          )
-                        }
-                      >
-                        Add to Cart
-                      </Button>
-                    )}
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+                    {
+                      auth?.user?.role === 'Admin' ? (
+                        <Button
+                          classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
+                          clickEvent={() =>
+                            dispatch(removeFromCart(pet)) // Admin removes pet
+                          }
+                        >
+                          Remove Pet
+                        </Button>
+                      ) : (
+                        <Button
+                          classes="px-3 py-2 rounded bg-black text-white hover:bg-gray-800"
+                          clickEvent={() =>
+                            dispatch(
+                              addToCart({
+                                id: pet._id,
+                                name: pet.name,
+                                price: pet.price,
+                                quantity: 1,
+                                image: pet.images[0],
+                              })
+                            )
+                          }
+                        >
+                          Add to Cart
+                        </Button>
+                      )
+                    }
+                    <Button classes={`px-3 py-2 rounded bg-black text-white hover:bg-gray-800`} clickEvent={() => dispatch(addToCart({ id: pet.id, name: pet.name, price: pet.price, quantity: 1, image: pet.images[0] }))}>
+                      Add to Cart
+                    </Button>
+                  </CardFooter >
+                </Card >
+              ))
+              }
+            </div >
           )}
-        </main>
-      </div>
-    </FadeInOnScroll>
+        </main >
+      </div >
+    </FadeInOnScroll >
   );
 }

@@ -8,13 +8,13 @@ export default function AboutPage() {
           <h1 className="text-3xl font-bold text-center mb-8">
             About TailScape
           </h1>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center ">
             <div>
               <img
-                src="/placeholder.svg?height=400&width=600"
+                src="https://plus.unsplash.com/premium_photo-1675791190312-7028ade21944?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="TailScape Team"
-                width={600}
-                height={400}
+                width={500}
+                height={350}
                 className="rounded-lg shadow-md"
               />
             </div>

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../store/authSlice';
 import { FaDog, FaUserShield, FaFish } from 'react-icons/fa';
+import axios from 'axios'; // Import axios
 
 const AuthPage = () => {
   const [mode, setMode] = useState('login');
@@ -50,19 +51,14 @@ const AuthPage = () => {
         : { ...formData, UIOrigin };
 
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
+      // Use axios to make the request
+      const response = await axios.post(endpoint, payload, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
-      }
+      const data = response.data;
 
       // Dispatch the login action with token and user data
       dispatch(
@@ -82,7 +78,7 @@ const AuthPage = () => {
         navigate('/dashboard');
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage(error.response ? error.response.data.message : 'Something went wrong');
     }
   };
 
@@ -120,40 +116,28 @@ const AuthPage = () => {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center p-4 overflow-hidden transition-colors duration-500 ${
-        mode === 'admin' || mode === 'adminSignup' ? 'bg-red-100' : 'bg-blue-100'
-      }`}
+      className={`min-h-screen flex items-center justify-center p-4 overflow-hidden transition-colors duration-500 ${mode === 'admin' || mode === 'adminSignup' ? 'bg-red-100' : 'bg-blue-100'}`}
     >
       <div className="relative w-full max-w-4xl">
         <div
-          className={`absolute -top-9 -left-9 w-24 h-24 z-0 rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-110 ${
-            mode === 'admin' || mode === 'adminSignup' ? 'bg-red-200' : 'bg-blue-200'
-          }`}
+          className={`absolute -top-9 -left-9 w-24 h-24 z-0 rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-110 ${mode === 'admin' || mode === 'adminSignup' ? 'bg-red-200' : 'bg-blue-200'}`}
         >
           <FaDog
-            className={`text-4xl transform transition-colors duration-500 ${
-              mode === 'admin' || mode === 'adminSignup' ? 'text-red-600' : 'text-blue-600'
-            }`}
+            className={`text-4xl transform transition-colors duration-500 ${mode === 'admin' || mode === 'adminSignup' ? 'text-red-600' : 'text-blue-600'}`}
           />
         </div>
         <div
-          className={`absolute -bottom-4 -right-4 w-24 h-24 rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-110 ${
-            mode === 'admin' || mode === 'adminSignup' ? 'bg-red-200' : 'bg-blue-200'
-          }`}
+          className={`absolute -bottom-4 -right-4 w-24 h-24 rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-110 ${mode === 'admin' || mode === 'adminSignup' ? 'bg-red-200' : 'bg-blue-200'}`}
         >
           <FaFish
-            className={`text-4xl transform rotate-45 transition-colors duration-500 ${
-              mode === 'admin' || mode === 'adminSignup' ? 'text-red-600' : 'text-blue-600'
-            }`}
+            className={`text-4xl transform rotate-45 transition-colors duration-500 ${mode === 'admin' || mode === 'adminSignup' ? 'text-red-600' : 'text-blue-600'}`}
           />
         </div>
         <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
           <div className="md:flex">
             <div className={`md:w-1/2 p-8 z-10 relative ${getSlideClass(slideLeftDirection)}`}>
               <h2
-                className={`text-3xl font-bold mb-6 text-center transition-colors duration-300 ${
-                  mode === 'admin' || mode === 'adminSignup' ? 'text-red-600' : 'text-blue-600'
-                }`}
+                className={`text-3xl font-bold mb-6 text-center transition-colors duration-300 ${mode === 'admin' || mode === 'adminSignup' ? 'text-red-600' : 'text-blue-600'}`}
               >
                 {mode === 'admin'
                   ? 'Admin Access'
@@ -172,11 +156,7 @@ const AuthPage = () => {
                     placeholder="Full Name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 rounded-md border-2 transition-colors duration-300 ${
-                      mode === 'adminSignup'
-                        ? 'border-red-300 focus:border-red-500'
-                        : 'border-blue-300 focus:border-blue-500'
-                    } focus:outline-none`}
+                    className={`w-full px-4 py-2 rounded-md border-2 transition-colors duration-300 ${mode === 'adminSignup' ? 'border-red-300 focus:border-red-500' : 'border-blue-300 focus:border-blue-500'} focus:outline-none`}
                     required
                   />
                 )}
@@ -186,11 +166,7 @@ const AuthPage = () => {
                   placeholder="Email Address"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 rounded-md border-2 transition-colors duration-300 ${
-                    mode === 'admin' || mode === 'adminSignup'
-                      ? 'border-red-300 focus:border-red-500'
-                      : 'border-blue-300 focus:border-blue-500'
-                  } focus:outline-none`}
+                  className={`w-full px-4 py-2 rounded-md border-2 transition-colors duration-300 ${mode === 'admin' || mode === 'adminSignup' ? 'border-red-300 focus:border-red-500' : 'border-blue-300 focus:border-blue-500'} focus:outline-none`}
                   required
                 />
                 <input
@@ -199,20 +175,12 @@ const AuthPage = () => {
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 rounded-md border-2 transition-colors duration-300 ${
-                    mode === 'admin' || mode === 'adminSignup'
-                      ? 'border-red-300 focus:border-red-500'
-                      : 'border-blue-300 focus:border-blue-500'
-                  } focus:outline-none`}
+                  className={`w-full px-4 py-2 rounded-md border-2 transition-colors duration-300 ${mode === 'admin' || mode === 'adminSignup' ? 'border-red-300 focus:border-red-500' : 'border-blue-300 focus:border-blue-500'} focus:outline-none`}
                   required
                 />
                 <button
                   type="submit"
-                  className={`w-full py-2 rounded-md transition-all duration-300 ${
-                    mode === 'admin' || mode === 'adminSignup'
-                      ? 'bg-red-500 text-white hover:bg-red-600'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  }`}
+                  className={`w-full py-2 rounded-md transition-all duration-300 ${mode === 'admin' || mode === 'adminSignup' ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
                 >
                   {mode === 'adminSignup'
                     ? 'Sign Up as Admin'
@@ -266,13 +234,7 @@ const AuthPage = () => {
               </div>
             </div>
             <div
-              className={`right-side md:w-1/2 text-white p-8 flex flex-col justify-center items-center transition-all duration-500 ease-in-out ${getSlideClass(
-                slideRightDirection
-              )} ${
-                mode === 'admin' || mode === 'adminSignup'
-                  ? 'bg-gradient-to-t from-red-700 to-red-500'
-                  : 'bg-gradient-to-t from-blue-700 to-blue-500'
-              }`}
+              className={`right-side md:w-1/2 text-white p-8 flex flex-col justify-center items-center transition-all duration-500 ease-in-out ${getSlideClass(slideRightDirection)} ${mode === 'admin' || mode === 'adminSignup' ? 'bg-gradient-to-t from-red-700 to-red-500' : 'bg-gradient-to-t from-blue-700 to-blue-500'}`}
             >
               <h3 className="text-2xl font-bold mb-4">
                 {mode === 'admin' || mode === 'adminSignup'
