@@ -138,9 +138,6 @@ export default function PetsPage() {
                         </Button>
                       )
                     }
-                    <Button classes={`px-3 py-2 rounded bg-black text-white hover:bg-gray-800`} clickEvent={() => dispatch(addToCart({ id: pet.id, name: pet.name, price: pet.price, quantity: 1, image: pet.images[0] }))}>
-                      Add to Cart
-                    </Button>
                   </CardFooter >
                 </Card >
               ))
