@@ -7,7 +7,9 @@ export default function Footer() {
 
   // Determine theme based on user role
   const isAdmin = auth.user?.role === 'Admin';
-  const theme = isAdmin ? 'from-red-700 to-red-500' : 'from-blue-700 to-blue-500';
+  const isVet = auth.user?.role === 'Vet';
+  const theme = isAdmin ? 'from-red-700 to-red-500' : 
+                isVet ? 'from-green-700 to-green-500' : 'from-blue-700 to-blue-500';
 
   return (
     <footer className={`bg-gradient-to-t ${theme} text-white shadow-md py-6`}>

@@ -7,6 +7,7 @@ import CartPage from '../router/views/Cart';
 import Checkout from '../router/views/Checkout';
 import UserDashboard from '../router/views/UserDashboard';
 import AdminDashboard from '../router/views/AdminDashboard';
+import VetDashboard from '../router/views/VetDashboard';
 import AuthPage from '../router/user/AuthPage';
 import PetsPage from '../router/views/Pets';
 import ServicesPage from '../router/views/ServicePage';
@@ -93,6 +94,14 @@ const PageRoutes = () => {
         element={
           <ProtectedRoute role="Admin">
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/vet-dashboard"
+        element={
+          <ProtectedRoute role="Vet">
+            <VetDashboard />
           </ProtectedRoute>
         }
       />

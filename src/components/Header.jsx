@@ -19,13 +19,18 @@ export default function Header() {
       navigate('/admin');
     } else if (auth.user?.role === 'User') {
       navigate('/dashboard');
-    } else {
+    } else if (auth.user?.role === 'Vet') {
+      navigate('/vet-dashboard');
+    }
+    else {
       navigate('/auth');
     }
   };
 
   const isAdmin = auth.user?.role === 'Admin';
-  const theme = isAdmin ? 'from-red-700 to-red-500' : 'from-blue-700 to-blue-500';
+  const isVet = auth.user?.role === 'Vet';
+  const theme = isAdmin ? 'from-red-700 to-red-500' : 
+                isVet ? 'from-green-700 to-green-500' : 'from-blue-700 to-blue-500';
 
   const handleLogoClick = () => {
     if (isAdmin) {
