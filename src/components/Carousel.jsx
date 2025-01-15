@@ -45,7 +45,7 @@ const Carousel = ({ children }) => {
             className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-2 rounded-full shadow-md hover:bg-opacity-75 transition-all duration-200 focus:outline-none z-10"
             disabled={currentIndex === 0}
           >
-            <ChevronLeft className="w-6 h-6 text-blue-600" />
+            <ChevronLeft className="w-6 h-6 text-indigo-600" />
           </button>
 
           <button
@@ -53,7 +53,7 @@ const Carousel = ({ children }) => {
             className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-2 rounded-full shadow-md hover:bg-opacity-75 transition-all duration-200 focus:outline-none z-10"
             disabled={currentIndex >= length - 2}
           >
-            <ChevronRight className="w-6 h-6 text-blue-600" />
+            <ChevronRight className="w-6 h-6 text-indigo-600" />
           </button>
         </>
       )}

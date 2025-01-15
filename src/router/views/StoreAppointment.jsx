@@ -11,7 +11,6 @@ const petIcons = {
   other: PawPrint,
 };
 
-// Breed options for each pet type
 const breedOptions = {
   Dog: ['Labrador Retriever', 'German Shepherd', 'Golden Retriever', 'Beagle'],
   Cat: ['Persian', 'Siamese', 'Maine Coon', 'Bengal'],
@@ -32,7 +31,7 @@ export default function PetStoreBookingPage() {
     // Fetch appointments from the API
     const fetchAppointments = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/appointments/store-appointments/${auth.user.id}`);
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/appointments/store-appointments/${auth.user.id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch appointments');
         }
@@ -61,7 +60,7 @@ export default function PetStoreBookingPage() {
     };
     try {
       // Send POST request to the backend
-      const response = await fetch('http://localhost:5000/api/appointments/store-appointments', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/appointments/store-appointments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,16 +106,17 @@ export default function PetStoreBookingPage() {
 
   return (
     <FadeInOnScroll>
-      <div className="min-h-screen bg-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-8 flex items-center justify-center">
-            <PawPrint className="w-12 h-12 mr-4 text-blue-600" />
+          <h1 className="text-4xl font-extrabold text-center text-indigo-800 mb-8 flex items-center justify-center">
+            <PawPrint className="w-12 h-12 mr-4 text-indigo-600" />
             TailScape Pet Store Visits
           </h1>
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 border-4 border-blue-200">
+
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 border-4 border-indigo-200">
             <div className="px-4 py-5 sm:p-6">
-              <h2 className="text-xl leading-6 font-medium text-blue-900 mb-4 flex items-center">
-                <CalendarIcon className="w-6 h-6 mr-2 text-blue-500" />
+              <h2 className="text-xl leading-6 font-medium text-indigo-900 mb-4 flex items-center">
+                <CalendarIcon className="w-6 h-6 mr-2 text-indigo-500" />
                 Schedule Your Visit
               </h2>
               <form
@@ -128,10 +128,10 @@ export default function PetStoreBookingPage() {
                     type="date"
                     value={newAppointmentDate}
                     onChange={(e) => setNewAppointmentDate(e.target.value)}
-                    className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     required
                   />
-                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-blue-500">
+                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-indigo-500">
                     Date
                   </label>
                 </div>
@@ -141,10 +141,10 @@ export default function PetStoreBookingPage() {
                     type="time"
                     value={newAppointmentTime}
                     onChange={(e) => setNewAppointmentTime(e.target.value)}
-                    className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     required
                   />
-                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-blue-500">
+                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-indigo-500">
                     Time
                   </label>
                 </div>
@@ -156,7 +156,7 @@ export default function PetStoreBookingPage() {
                       setNewPetType(e.target.value);
                       setNewBreed('');
                     }}
-                    className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                    className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none"
                     required
                   >
                     <option value="Dog">Dog</option>
@@ -164,7 +164,7 @@ export default function PetStoreBookingPage() {
                     <option value="Bird">Bird</option>
                     <option value="Other">Other</option>
                   </select>
-                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-blue-500">
+                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-indigo-500">
                     Pet Type
                   </label>
                 </div>
@@ -175,7 +175,7 @@ export default function PetStoreBookingPage() {
                       type="text"
                       value={newBreed}
                       onChange={(e) => setNewBreed(e.target.value)}
-                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="Specify Breed"
                       required
                     />
@@ -183,7 +183,7 @@ export default function PetStoreBookingPage() {
                     <select
                       value={newBreed}
                       onChange={(e) => setNewBreed(e.target.value)}
-                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none"
                       required
                     >
                       <option value="">Select Breed</option>
@@ -194,13 +194,13 @@ export default function PetStoreBookingPage() {
                       ))}
                     </select>
                   )}
-                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-blue-500">
+                  <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-indigo-500">
                     {newPetType === 'Other' ? 'Breed (Specify)' : 'Breed'}
                   </label>
                 </div>
                 <button
                   type="submit"
-                  className="col-span-2 w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  className="col-span-2 w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
                   Book Your Visit
                 </button>
@@ -208,10 +208,10 @@ export default function PetStoreBookingPage() {
             </div>
           </div>
 
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden border-4 border-blue-200">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden border-4 border-indigo-200">
             <div className="px-4 py-5 sm:p-6">
-              <h2 className="text-xl leading-6 font-medium text-blue-900 mb-4 flex items-center">
-                <ClockIcon className="w-6 h-6 mr-2 text-blue-500" />
+              <h2 className="text-xl leading-6 font-medium text-indigo-900 mb-4 flex items-center">
+                <ClockIcon className="w-6 h-6 mr-2 text-indigo-500" />
                 Your Upcoming Visits
               </h2>
               <ul className="divide-y divide-gray-200">

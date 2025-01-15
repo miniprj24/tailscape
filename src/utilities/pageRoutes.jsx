@@ -22,6 +22,8 @@ import DynamicHospitalPage from '../router/views/Dynamichospital';
 import BookPrivateHospital from '../router/views/PrivateHospital';
 import AdminAppointmentView from '../router/views/adminappointmentssview';
 import MyAppointment from '../router/views/MyAppointment';
+import ProductDetails from '../router/views/ProductDetail';
+
 const PageRoutes = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -40,8 +42,8 @@ const PageRoutes = () => {
       {/* Public Routes */}
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/products" element={<Products />} />
+      <Route path="/products/:id" element={<ProductDetails />} />
       <Route path="/pets" element={<PetsPage />} />
-      <Route path="/adminappointview" element={< AdminAppointmentView/>} />
        
       {/* Restricted Public Routes */}
       {user?.role !== 'Admin' && (
@@ -61,6 +63,14 @@ const PageRoutes = () => {
           />
         </>
       )}
+
+      {
+        (user?.role == "Admin" || user?.role == "Vet") && (
+          <>
+            <Route path="/adminappointview" element={< AdminAppointmentView/>} />
+          </>
+        )
+      }
 
       {/* Protected Routes */}
       <Route

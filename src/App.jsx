@@ -27,7 +27,7 @@ function App() {
     const isAdmin = auth?.user?.role === 'Admin';
     const gradientClass = isAdmin
       ? 'bg-gradient-to-b from-red-50 to-red-200'
-      : 'bg-gradient-to-b from-blue-50 to-blue-200';
+      : 'bg-gradient-to-b from-indigo-50 to-indigo-200';
 
     return (
       <div className={`flex flex-col min-h-screen transition-all duration-300 ${gradientClass}`}>

@@ -112,17 +112,17 @@ const auth = useSelector((state) => state.auth);
   }
   return (
     <FadeInOnScroll>
-      <div className="min-h-screen bg-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-8 flex items-center justify-center">
             <PawPrint className="w-12 h-12 mr-4 text-blue-600" />
             Veterinary Appointments at  {hospitalType}
           </h1>
 
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 border-4 border-blue-200">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 border-4 border-indigo-200">
             <div className="px-4 py-5 sm:p-6">
-              <h2 className="text-xl leading-6 font-medium text-blue-900 mb-4 flex items-center">
-                <CalendarIcon className="w-6 h-6 mr-2 text-blue-500" />
+              <h2 className="text-xl leading-6 font-medium text-indigo-900 mb-4 flex items-center">
+                <CalendarIcon className="w-6 h-6 mr-2 text-indigo-500" />
                 Schedule Your Visit
               </h2>
 
@@ -132,8 +132,8 @@ const auth = useSelector((state) => state.auth);
                     <div
                       className={`flex flex-col items-center p-4 border rounded-lg shadow-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:z-10 h-full ${
                         selectedDoctor && selectedDoctor.id === doctor.id
-                          ? 'bg-blue-100 border-blue-500'
-                          : 'hover:bg-blue-50'
+                          ? 'bg-indigo-100 border-indigo-500'
+                          : 'hover:bg-indigo-50'
                       }`}
                       onClick={() => setSelectedDoctor(doctor)}
                     >
@@ -142,7 +142,7 @@ const auth = useSelector((state) => state.auth);
                         alt={doctor.name}
                         className="w-24 h-24 rounded-full object-cover mb-4"
                       />
-                      <h3 className="font-semibold text-blue-800 text-xl mb-2">{doctor.name}</h3>
+                      <h3 className="font-semibold text-indigo-800 text-xl mb-2">{doctor.name}</h3>
                       <p className="text-sm text-gray-600 mb-2">
                         Specializing in {doctor.specialty}
                       </p>
@@ -164,10 +164,10 @@ const auth = useSelector((state) => state.auth);
                       type="date"
                       value={newAppointmentDate}
                       onChange={(e) => setNewAppointmentDate(e.target.value)}
-                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       required
                     />
-                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-blue-500">
+                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-indigo-500">
                       Date
                     </label>
                   </div>
@@ -177,10 +177,10 @@ const auth = useSelector((state) => state.auth);
                       type="time"
                       value={newAppointmentTime}
                       onChange={(e) => setNewAppointmentTime(e.target.value)}
-                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       required
                     />
-                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-blue-500">
+                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-indigo-500">
                       Time
                     </label>
                   </div>
@@ -192,7 +192,7 @@ const auth = useSelector((state) => state.auth);
                         setNewPetType(e.target.value);
                         setNewBreed('');
                       }}
-                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                      className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none"
                       required
                     >
                       <option value="Dog">Dog</option>
@@ -200,7 +200,7 @@ const auth = useSelector((state) => state.auth);
                       <option value="Bird">Bird</option>
                       <option value="Other">Other</option>
                     </select>
-                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-blue-500">
+                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-indigo-500">
                       Pet Type
                     </label>
                   </div>
@@ -211,7 +211,7 @@ const auth = useSelector((state) => state.auth);
                         type="text"
                         value={newBreed}
                         onChange={(e) => setNewBreed(e.target.value)}
-                        className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         placeholder="Specify Breed"
                         required
                       />
@@ -219,7 +219,7 @@ const auth = useSelector((state) => state.auth);
                       <select
                         value={newBreed}
                         onChange={(e) => setNewBreed(e.target.value)}
-                        className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                        className="peer w-full h-full px-3 py-2 text-sm border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none"
                         required
                       >
                         <option value="">Select Breed</option>
@@ -230,14 +230,14 @@ const auth = useSelector((state) => state.auth);
                         ))}
                       </select>
                     )}
-                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-blue-500">
+                    <label className="absolute left-3 -top-2.5 bg-white px-1 text-xs text-gray-600 transition-all peer-focus:text-indigo-500">
                       {newPetType === 'Other' ? 'Breed (Specify)' : 'Breed'}
                     </label>
                   </div>
 
                   <button
                     type="submit"
-                    className="col-span-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-lg mt-4 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    className="col-span-2 bg-indigo-600 text-white px-4 py-2 rounded-lg text-lg mt-4 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
                   >
                    Book an Appointment with {selectedDoctor.name}
                   </button>
@@ -246,10 +246,10 @@ const auth = useSelector((state) => state.auth);
             </div>
           </div>
 
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden border-4 border-blue-200">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden border-4 border-indigo-200">
             <div className="px-4 py-5 sm:p-6">
-              <h2 className="text-xl leading-6 font-medium text-blue-900 mb-4 flex items-center">
-                <ClockIcon className="w-6 h-6 mr-2 text-blue-500" />
+              <h2 className="text-xl leading-6 font-medium text-indigo-900 mb-4 flex items-center">
+                <ClockIcon className="w-6 h-6 mr-2 text-indigo-500" />
                 Your Upcoming Visits
               </h2>
               <ul className="divide-y divide-gray-200">
@@ -259,7 +259,7 @@ const auth = useSelector((state) => state.auth);
                     <li key={appointment.id} className="py-4 flex items-center justify-between">
                       <div className="flex items-center">
                         {PetIcon && (
-                          <PetIcon className="h-6 w-6 text-blue-500 mr-3" aria-hidden="true" />
+                          <PetIcon className="h-6 w-6 text-indigo-500 mr-3" aria-hidden="true" />
                         )}
                         <span className="text-sm font-medium text-gray-900">
                           {new Date(appointment.date).toLocaleDateString('en-US', {

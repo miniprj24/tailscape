@@ -15,7 +15,7 @@ const ProductCard = ({ product, onAddToCart, onRemoveFromCart, onEditProduct, is
         <p className="text-gray-600 mb-2">
           {product.currency} {product.price}
         </p>
-        <Button clickEvent={() => onAddToCart(product)} classes="bg-blue-500 hover:bg-blue-600 text-white w-full mb-2">
+        <Button clickEvent={() => onAddToCart(product)} classes="bg-indigo-500 hover:bg-indigo-600 text-white w-full mb-2">
           Add to Cart
         </Button>
 

@@ -45,7 +45,7 @@ export default function AddPetForm() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/pets`,
+        `${import.meta.env.VITE_BASE_URL}/pets`,
         {
           method: 'POST',
           body: formDataToSend,
