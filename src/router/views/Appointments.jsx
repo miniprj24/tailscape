@@ -43,7 +43,7 @@ export default function AppointmentsPage() {
                   and well-being.
                 </p>
                 <Link
-                  to="/vet-appointment"
+                  to="/veterneryservice"
                   className="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300"
                 >
                   Book Vet Appointment

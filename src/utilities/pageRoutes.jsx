@@ -16,7 +16,12 @@ import ContactPage from '../router/views/Contact';
 import AppointmentsPage from '../router/views/Appointments';
 import StoreAppointments from '../router/views/StoreAppointment';
 import VetAppointments from '../router/views/VetAppointment';
-
+import VeterinaryServices from '../router/views/VeterneryHospital';
+import BookGovernmentHospital from '../router/views/GovernmentHospital';
+import DynamicHospitalPage from '../router/views/Dynamichospital';
+import BookPrivateHospital from '../router/views/PrivateHospital';
+import AdminAppointmentView from '../router/views/adminappointmentssview';
+import MyAppointment from '../router/views/MyAppointment';
 const PageRoutes = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -36,7 +41,8 @@ const PageRoutes = () => {
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/products" element={<Products />} />
       <Route path="/pets" element={<PetsPage />} />
-
+      <Route path="/adminappointview" element={< AdminAppointmentView/>} />
+       
       {/* Restricted Public Routes */}
       {user?.role !== 'Admin' && (
         <>
@@ -89,6 +95,47 @@ const PageRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/veterneryservice"
+        element={
+          <ProtectedRoute role="User">
+            <VeterinaryServices/>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/government-hospital"
+        element={
+          <ProtectedRoute role="User">
+            <BookGovernmentHospital/>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/private-hospital"
+        element={
+          <ProtectedRoute role="User">
+            <BookPrivateHospital/>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-appointments"
+        element={
+          <ProtectedRoute role="User">
+            <MyAppointment/>
+          </ProtectedRoute>
+        }
+      />
+<Route path="/vet-appointment/:hospitalType" 
+element={
+  <ProtectedRoute role="User">
+    <DynamicHospitalPage />
+  </ProtectedRoute>
+}/>
+
+
+ 
       <Route
         path="/admin"
         element={

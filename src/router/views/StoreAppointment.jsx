@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CalendarIcon, CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
 import { PawPrint, Dog, Cat, Bird } from 'lucide-react';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
+import { useSelector } from 'react-redux';
 
 const petIcons = {
   dog: Dog,
@@ -18,38 +19,36 @@ const breedOptions = {
 };
 
 export default function PetStoreBookingPage() {
-  const [appointments, setAppointments] = useState([
-    {
-      id: 1,
-      date: '2023-06-01',
-      time: '10:00 AM',
-      status: 'approved',
-      petType: 'Dog',
-      breed: 'Labrador Retriever',
-    },
-    {
-      id: 2,
-      date: '2023-06-15',
-      time: '2:00 PM',
-      status: 'denied',
-      petType: 'Cat',
-      breed: 'Persian',
-    },
-    {
-      id: 3,
-      date: '2023-06-30',
-      time: '11:30 AM',
-      status: 'pending',
-      petType: 'Bird',
-      breed: 'Parrot',
-    },
-  ]);
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true); // To track the loading state
   const [newAppointmentDate, setNewAppointmentDate] = useState('');
   const [newAppointmentTime, setNewAppointmentTime] = useState('');
   const [newPetType, setNewPetType] = useState('Dog');
   const [newBreed, setNewBreed] = useState('');
 
-  const handleBookAppointment = (e) => {
+  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // Fetch appointments from the API
+    const fetchAppointments = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/appointments/store-appointments/${auth.user.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch appointments');
+        }
+        const data = await response.json();
+        setAppointments(data.appointments); // Assuming the response has an 'appointments' field
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false); // Set loading to false once the data is fetched
+      }
+    };
+    
+    fetchAppointments();
+  }, []);
+
+  const handleBookAppointment = async (e) => {
     e.preventDefault();
     const newAppointment = {
       id: Date.now(),
@@ -58,12 +57,33 @@ export default function PetStoreBookingPage() {
       status: 'pending',
       petType: newPetType,
       breed: newBreed,
+      userId: auth.user.id,
     };
-    setAppointments([...appointments, newAppointment]);
-    setNewAppointmentDate('');
-    setNewAppointmentTime('');
-    setNewPetType('Dog');
-    setNewBreed('');
+    try {
+      // Send POST request to the backend
+      const response = await fetch('http://localhost:5000/api/appointments/store-appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newAppointment),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to book appointment');
+      }
+
+      // Get the response data and update the appointments list
+      const savedAppointment = await response.json();
+
+      setAppointments([...appointments, savedAppointment.appointment]);
+      setNewAppointmentDate('');
+      setNewAppointmentTime('');
+      setNewPetType('Dog');
+      setNewBreed('');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const getStatusIcon = (status) => {
@@ -76,6 +96,14 @@ export default function PetStoreBookingPage() {
         return <ClockIcon className="w-6 h-6 text-yellow-500" />;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span>Loading...</span>
+      </div>
+    );
+  }
 
   return (
     <FadeInOnScroll>
@@ -207,13 +235,13 @@ export default function PetStoreBookingPage() {
                       </div>
                       <div className="flex items-center">
                         <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full $(
                             appointment.status === 'approved'
                               ? 'bg-green-100 text-green-800'
                               : appointment.status === 'denied'
                                 ? 'bg-red-100 text-red-800'
                                 : 'bg-yellow-100 text-yellow-800'
-                          }`}
+                          )`}
                         >
                           {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                         </span>

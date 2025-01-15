@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CalendarIcon, CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
 import { Dog, Cat, Bird, PawPrint } from 'lucide-react';
 import Carousel from '../../components/Carousel';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
+import { useSelector } from 'react-redux';
 
 const petIcons = {
   dog: Dog,
@@ -17,46 +18,38 @@ const breedOptions = {
   Bird: ['Parrot', 'Canary', 'Cockatiel', 'Finch'],
 };
 
-const doctors = [
-  {
-    id: 1,
-    name: 'Dr. Ragini',
-    image: 'src/images/ragini.jpg',
-    specialty: 'Dog',
-    breeds: ['Labrador Retriever', 'Beagle'],
-  },
-  {
-    id: 2,
-    name: 'Dr. Ramesh',
-    image: 'src/images/ramesh.jpg',
-    specialty: 'Cat',
-    breeds: ['Persian', 'Siamese'],
-  },
-  {
-    id: 3,
-    name: 'Dr. Sangeeta',
-    image: 'src/images/sangeeta.jpg',
-    specialty: 'Bird',
-    breeds: ['Parrot', 'Canary'],
-  },
-  {
-    id: 4,
-    name: 'Dr. Nisha',
-    image: 'src/images/nisha.jpg',
-    specialty: 'Dog',
-    breeds: ['German Shepherd', 'Golden Retriever'],
-  },
-];
 
-const VetAppointment = () => {
+const VetAppointment = ({ hospitalType, doctors }) => {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true); // To track the loading state
+   
   const [newAppointmentDate, setNewAppointmentDate] = useState('');
   const [newAppointmentTime, setNewAppointmentTime] = useState('');
   const [newPetType, setNewPetType] = useState('Dog');
   const [newBreed, setNewBreed] = useState('');
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+const auth = useSelector((state) => state.auth);
 
-  const handleBookAppointment = (e) => {
+  useEffect(() => {
+      // Fetch appointments from the API
+      const fetchAppointments = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/api/doctorAppointments/doctor-appointments/${auth.user.id}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch appointments');
+          }
+          const data = await response.json();
+          setAppointments(data.appointments); // Assuming the response has an 'appointments' field
+        } catch (error) {
+          console.error('Error:', error);
+        } finally {
+          setLoading(false); // Set loading to false once the data is fetched
+        }
+      };
+      
+      fetchAppointments();
+    }, []);
+  const handleBookAppointment = async(e) => {
     e.preventDefault();
     const newAppointment = {
       id: Date.now(),
@@ -65,14 +58,38 @@ const VetAppointment = () => {
       status: 'pending',
       petType: newPetType,
       breed: newBreed,
-      doctor: selectedDoctor.name,
+      doctor: selectedDoctor._id,
+      userId: auth.user.id,
+      hospital : selectedDoctor.vetHospital._id
     };
-    setAppointments([...appointments, newAppointment]);
+
+    try {
+      // Send POST request to the backend
+      const response = await fetch('http://localhost:5000/api/doctorAppointments/doctor-appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newAppointment),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to book appointment');
+      }
+
+      // Get the response data and update the appointments list
+      const savedAppointment = await response.json();
+
+    setAppointments([...appointments, savedAppointment]);
     setNewAppointmentDate('');
     setNewAppointmentTime('');
     setNewPetType('Dog');
     setNewBreed('');
     setSelectedDoctor(null);
+    window.location.reload();
+  } catch (error) {
+    console.error('Error:', error);
+  }
   };
 
   const getStatusIcon = (status) => {
@@ -86,13 +103,20 @@ const VetAppointment = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span>Loading...</span>
+      </div>
+    );
+  }
   return (
     <FadeInOnScroll>
       <div className="min-h-screen bg-blue-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-8 flex items-center justify-center">
             <PawPrint className="w-12 h-12 mr-4 text-blue-600" />
-            Veterinary Appointments
+            Veterinary Appointments at  {hospitalType}
           </h1>
 
           <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 border-4 border-blue-200">
@@ -215,7 +239,7 @@ const VetAppointment = () => {
                     type="submit"
                     className="col-span-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-lg mt-4 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                   >
-                    Book Appointment
+                   Book an Appointment with {selectedDoctor.name}
                   </button>
                 </form>
               )}
@@ -245,7 +269,7 @@ const VetAppointment = () => {
                             day: 'numeric',
                           })}{' '}
                           at {appointment.time} - {appointment.petType} ({appointment.breed}) with{' '}
-                          {appointment.doctor}
+                          {appointment.doctor.name}
                         </span>
                       </div>
                       <div className="flex items-center">

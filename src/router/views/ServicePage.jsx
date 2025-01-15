@@ -9,7 +9,7 @@ const Services = () => {
       description:
         'Find and purchase a variety of pets like kittens, puppies, birds, and exotic creatures delivered to your doorstep.',
       link: '/pets',
-      imgSrc: 'src/images/animals.jpg',
+      imgSrc: '/images/animals.jpg',
       imgAlt: 'Buying Animals',
       buttonTitle: 'Explore Pets',
     },
@@ -18,7 +18,7 @@ const Services = () => {
       description:
         'Shop premium pet food and products tailored to meet the dietary needs of all types of pets.',
       link: '/products',
-      imgSrc: 'src/images/products.jpg',
+      imgSrc: '/images/products.jpg',
       imgAlt: 'Animal Products',
       buttonTitle: 'Shop Products',
     },
@@ -27,7 +27,7 @@ const Services = () => {
       description:
         'Visit our store to explore pets, products, and accessories with personalized assistance.',
       link: '/StoreAppointment',
-      imgSrc: 'src/images/store-appointment.jpg',
+      imgSrc: '/images/store-appointment.jpg',
       imgAlt: 'Store Appointment',
       buttonTitle: 'Book Now',
     },
@@ -36,7 +36,7 @@ const Services = () => {
       description:
         'Book a consultation with experienced vets for your pet’s health and routine check-ups.',
       link: '/vet-appointment',
-      imgSrc: 'src/images/vet-appointment.jpg',
+      imgSrc: '/images/vet-appointment.jpg',
       imgAlt: 'Veterinary Appointment',
       buttonTitle: 'Book Now',
     },

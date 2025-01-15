@@ -29,6 +29,7 @@ export default function Header() {
 
   const isAdmin = auth.user?.role === 'Admin';
   const isVet = auth.user?.role === 'Vet';
+  const isUser = auth.user?.role === 'User';
   const theme = isAdmin ? 'from-red-700 to-red-500' : 
                 isVet ? 'from-green-700 to-green-500' : 'from-blue-700 to-blue-500';
 
@@ -65,7 +66,20 @@ export default function Header() {
                 Pets
               </NavLink>
             </li>
-            {!isAdmin && (
+           
+            {(isAdmin || isVet) && (
+              <>
+                {auth.isAuthenticated && (
+            <li>
+              <NavLink to="/adminappointview" className="hover:text-gray-300 transition duration-200">
+                Appointments
+              </NavLink>
+            </li>
+              )}
+              </>
+              )}
+
+            {isUser && (
               <>
                 {auth.isAuthenticated && (
                   <li>
