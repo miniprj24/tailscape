@@ -14,7 +14,7 @@ export default function ServiceCard({ title, description, icon }) {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center">
-      <div className="text-4xl text-blue-500 mb-4">
+      <div className="text-4xl text-indigo-500 mb-4">
         <IconComponent />
       </div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>

@@ -1,65 +1,48 @@
-import { useState } from 'react';
-import { Input } from '../../components/ui/Input';
-import { Button } from '../../components/ui/Button';
+import React, { useState } from "react";
+import { Input } from "../../components/ui/Input";
+import { Button } from "../../components/ui/Button";
 
 export default function AddPetProduct() {
   const [formData, setFormData] = useState({
-    productName: '',
-    description: '',
-    category: '',
-    brand: '',
-    petType: '',
-    lifeStage: '',
+    productName: "",
+    description: "",
+    category: "",
+    brand: "",
+    petType: "",
+    lifeStage: "",
     ingredients: [],
-    nutritionalInformation: {
-      protein: '',
-      fat: '',
-      fiber: '',
-    },
-    price: '',
-    quantity: '',
-    currency: '',
-    discountType: '',
-    discountValue: '',
-    weight: '',
+    nutritionalInformation: { protein: "", fat: "", fiber: "" },
+    price: "",
+    quantity: "",
+    currency: "",
+    discountType: "",
+    discountValue: "",
+    weight: "",
     allergens: [],
     images: [],
   });
-
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === 'ingredients' || name === 'allergens') {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value.split(',').map((item) => item.trim()),
-      }));
-    } else if (name === 'nutritionalInformation.protein' || name === 'nutritionalInformation.fat' || name === 'nutritionalInformation.fiber') {
-      setFormData((prevData) => ({
-        ...prevData,
-        nutritionalInformation: {
-          ...prevData.nutritionalInformation,
-          [name.split('.')[1]]: value,
-        },
+    if (name === "ingredients" || name === "allergens") {
+      setFormData((prev) => ({ ...prev, [name]: value.split(",").map((i) => i.trim()) }));
+    } else if (name.startsWith("nutritionalInformation.")) {
+      const key = name.split(".")[1];
+      setFormData((prev) => ({
+        ...prev,
+        nutritionalInformation: { ...prev.nutritionalInformation, [key]: value },
       }));
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prevData) => ({
-        ...prevData,
-        images: [file],
-      }));
+      setFormData((prev) => ({ ...prev, images: [file] }));
     }
   };
 
@@ -67,60 +50,55 @@ export default function AddPetProduct() {
     e.preventDefault();
 
     const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (key === 'images' && formData.images[0]) {
-        formDataToSend.append(key, formData.images[0]);
-      } else if (key === 'nutritionalInformation') {
-        Object.keys(formData.nutritionalInformation).forEach((nutrient) => {
-          formDataToSend.append(`nutritionalInformation[${nutrient}]`, formData.nutritionalInformation[nutrient]);
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === "images" && value[0]) {
+        formDataToSend.append(key, value[0]);
+      } else if (typeof value === "object" && !Array.isArray(value)) {
+        Object.entries(value).forEach(([subKey, subValue]) => {
+          formDataToSend.append(`${key}[${subKey}]`, subValue);
         });
       } else {
-        formDataToSend.append(key, Array.isArray(formData[key]) ? formData[key].join(',') : formData[key]);
+        formDataToSend.append(key, Array.isArray(value) ? value.join(",") : value);
       }
     });
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/pet-products`,
-        {
-          method: 'POST',
-          body: formDataToSend,
-        }
-      );
-
+      const token = sessionStorage.getItem('token');
+      console.log(token);
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/products/create-product`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`.trim(),
+        },
+        body: formDataToSend,
+      });
       if (response.ok) {
-        setSuccessMessage('Product added successfully!');
+        setSuccessMessage("Product added successfully!");
+        setError("");
         setFormData({
-          productName: '',
-          description: '',
-          category: '',
-          brand: '',
-          petType: '',
-          lifeStage: '',
+          productName: "",
+          description: "",
+          category: "",
+          brand: "",
+          petType: "",
+          lifeStage: "",
           ingredients: [],
-          nutritionalInformation: {
-            protein: '',
-            fat: '',
-            fiber: '',
-          },
-          price: '',
-          quantity: '',
-          currency: '',
-          discountType: '',
-          discountValue: '',
-          weight: '',
+          nutritionalInformation: { protein: "", fat: "", fiber: "" },
+          price: "",
+          quantity: "",
+          currency: "",
+          discountType: "",
+          discountValue: "",
+          weight: "",
           allergens: [],
           images: [],
         });
-        setError('');
       } else {
         const data = await response.json();
-        setError(data.message || 'Failed to add product.');
-        setSuccessMessage('');
+        setError(data.message || "Failed to add product.");
       }
-    } catch (error) {
-      setError('Error submitting form. Please try again.');
-      setSuccessMessage('');
+    } catch (err) {
+      setError("Error submitting form.");
     }
   };
 
@@ -148,7 +126,63 @@ export default function AddPetProduct() {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Product Description"
+          placeholder="Description"
+          required
+        />
+        <Input
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          placeholder="Category"
+          required
+        />
+        <Input
+          name="brand"
+          value={formData.brand}
+          onChange={handleChange}
+          placeholder="Brand"
+          required
+        />
+        <Input
+          name="petType"
+          value={formData.petType}
+          onChange={handleChange}
+          placeholder="Pet Type"
+          required
+        />
+        <Input
+          name="lifeStage"
+          value={formData.lifeStage}
+          onChange={handleChange}
+          placeholder="Life Stage"
+          required
+        />
+        <Input
+          name="ingredients"
+          value={formData.ingredients.join(", ")}
+          onChange={handleChange}
+          placeholder="Ingredients (comma separated)"
+          required
+        />
+        <Input
+          name="nutritionalInformation.protein"
+          value={formData.nutritionalInformation.protein}
+          onChange={handleChange}
+          placeholder="Protein (%)"
+          required
+        />
+        <Input
+          name="nutritionalInformation.fat"
+          value={formData.nutritionalInformation.fat}
+          onChange={handleChange}
+          placeholder="Fat (%)"
+          required
+        />
+        <Input
+          name="nutritionalInformation.fiber"
+          value={formData.nutritionalInformation.fiber}
+          onChange={handleChange}
+          placeholder="Fiber (%)"
           required
         />
         <Input
@@ -250,6 +284,33 @@ export default function AddPetProduct() {
           onChange={handleChange}
           placeholder="Weight"
           required
+        />
+        <Input
+          name="discountType"
+          value={formData.discountType}
+          onChange={handleChange}
+          placeholder="Discount Type"
+          required
+        />
+        <Input
+          name="discountValue"
+          value={formData.discountValue}
+          onChange={handleChange}
+          placeholder="Discount Value"
+          type="number"
+        />
+        <Input
+          name="weight"
+          value={formData.weight}
+          onChange={handleChange}
+          placeholder="Weight (e.g., kg)"
+          required
+        />
+        <Input
+          name="allergens"
+          value={formData.allergens.join(", ")}
+          onChange={handleChange}
+          placeholder="Allergens (comma separated)"
         />
         <Input
           name="allergens"

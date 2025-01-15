@@ -9,7 +9,7 @@ export default function Footer() {
   const isAdmin = auth.user?.role === 'Admin';
   const isVet = auth.user?.role === 'Vet';
   const theme = isAdmin ? 'from-red-700 to-red-500' : 
-                isVet ? 'from-green-700 to-green-500' : 'from-blue-700 to-blue-500';
+                isVet ? 'from-green-700 to-green-500' : 'from-indigo-700 to-indigo-500';
 
   return (
     <footer className={`bg-gradient-to-t ${theme} text-white shadow-md py-6`}>
@@ -25,22 +25,22 @@ export default function Footer() {
           <div className="mt-4 md:mt-0 flex justify-center w-full md:w-auto">
             <ul className="space-x-5 flex justify-left md:justify-start">
               <li>
-                <NavLink to="/products" className="text-sm hover:text-blue-300">
+                <NavLink to="/products" className="text-sm hover:text-indigo-300">
                   Products
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/services" className="text-sm hover:text-blue-300">
+                <NavLink to="/services" className="text-sm hover:text-indigo-300">
                   Services
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about" className="text-sm hover:text-blue-300">
+                <NavLink to="/about" className="text-sm hover:text-indigo-300">
                   About Us
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/contact" className="text-sm hover:text-blue-300">
+                <NavLink to="/contact" className="text-sm hover:text-indigo-300">
                   Contact
                 </NavLink>
               </li>
@@ -49,13 +49,13 @@ export default function Footer() {
 
           <div className="mt-4 md:mt-0">
             <div className="flex justify-center space-x-6">
-              <NavLink to="#" className="text-2xl hover:text-blue-300">
+              <NavLink to="#" className="text-2xl hover:text-indigo-300">
                 <FaFacebook />
               </NavLink>
-              <NavLink to="#" className="text-2xl hover:text-blue-300">
+              <NavLink to="#" className="text-2xl hover:text-indigo-300">
                 <FaTwitter />
               </NavLink>
-              <NavLink to="#" className="text-2xl hover:text-blue-300">
+              <NavLink to="#" className="text-2xl hover:text-indigo-300">
                 <FaInstagram />
               </NavLink>
             </div>

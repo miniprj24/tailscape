@@ -21,8 +21,7 @@ export default function Header() {
       navigate('/dashboard');
     } else if (auth.user?.role === 'Vet') {
       navigate('/vet-dashboard');
-    }
-    else {
+    } else {
       navigate('/auth');
     }
   };
@@ -30,8 +29,11 @@ export default function Header() {
   const isAdmin = auth.user?.role === 'Admin';
   const isVet = auth.user?.role === 'Vet';
   const isUser = auth.user?.role === 'User';
-  const theme = isAdmin ? 'from-red-700 to-red-500' : 
-                isVet ? 'from-green-700 to-green-500' : 'from-blue-700 to-blue-500';
+  const theme = isAdmin
+    ? 'from-red-700 to-red-500'
+    : isVet
+    ? 'from-green-700 to-green-500'
+    : 'from-indigo-700 to-indigo-500';
 
   const handleLogoClick = () => {
     if (isAdmin) {
@@ -56,42 +58,14 @@ export default function Header() {
         {/* Navigation */}
         <nav>
           <ul className="flex space-x-6 text-lg">
-            <li>
-              <NavLink to="/products" className="hover:text-gray-300 transition duration-200">
-                Products
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/pets" className="hover:text-gray-300 transition duration-200">
-                Pets
-              </NavLink>
-            </li>
-           
-            {(isAdmin || isVet) && (
+            {/* Navigation for Unauthenticated Users */}
+            {!auth.isAuthenticated && (
               <>
-                {auth.isAuthenticated && (
-            <li>
-              <NavLink to="/adminappointview" className="hover:text-gray-300 transition duration-200">
-                Appointments
-              </NavLink>
-            </li>
-              )}
-              </>
-              )}
-
-            {isUser && (
-              <>
-                {auth.isAuthenticated && (
-                  <li>
-                    <NavLink
-                      to="/appointments"
-                      className="hover:text-gray-300 transition duration-200"
-                    >
-                      Appointments
-                    </NavLink>
-                  </li>
-                )}
-
+                <li>
+                  <NavLink to="/" className="hover:text-gray-300 transition duration-200">
+                    Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="/services" className="hover:text-gray-300 transition duration-200">
                     Services
@@ -103,11 +77,82 @@ export default function Header() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/contact" className="hover:text-gray-300 transition duration-200">
-                    Contact
+                  <NavLink to="/products" className="hover:text-gray-300 transition duration-200">
+                    Products
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/pets" className="hover:text-gray-300 transition duration-200">
+                    Pets
                   </NavLink>
                 </li>
               </>
+            )}
+
+            {/* User Navigation */}
+            {isUser && auth.isAuthenticated && (
+              <>
+                <li>
+                  <NavLink to="/" className="hover:text-gray-300 transition duration-200">
+                    Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/services" className="hover:text-gray-300 transition duration-200">
+                    Services
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/about" className="hover:text-gray-300 transition duration-200">
+                    About
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/products" className="hover:text-gray-300 transition duration-200">
+                    Products
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/pets" className="hover:text-gray-300 transition duration-200">
+                    Pets
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/appointments" className="hover:text-gray-300 transition duration-200">
+                    Appointments
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* Admin Navigation */}
+            {isAdmin && auth.isAuthenticated && (
+              <>
+                <li>
+                  <NavLink to="/pets" className="hover:text-gray-300 transition duration-200">
+                    Pets
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/products" className="hover:text-gray-300 transition duration-200">
+                    Products
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/adminappointview" className="hover:text-gray-300 transition duration-200">
+                    Appointments
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* Vet Navigation */}
+            {isVet && auth.isAuthenticated && (
+              <li>
+                <NavLink to="/adminappointview" className="hover:text-gray-300 transition duration-200">
+                  Appointments
+                </NavLink>
+              </li>
             )}
           </ul>
         </nav>
@@ -115,7 +160,7 @@ export default function Header() {
         {/* Cart and User Links */}
         <div className="flex items-center space-x-6">
           {/* Shopping Cart Link */}
-          {!isAdmin && (
+          {!isAdmin && !isVet && (
             <NavLink
               to="/cart"
               className="group relative flex items-center p-2 hover:bg-white rounded-md transition duration-200"
@@ -130,7 +175,7 @@ export default function Header() {
           )}
 
           {/* User Authentication/Navigation */}
-          {auth.isAuthenticated && (
+          {auth.isAuthenticated ? (
             <div className="flex items-center space-x-4">
               {/* User Profile Link */}
               <button
@@ -151,8 +196,7 @@ export default function Header() {
                 <span>Logout</span>
               </button>
             </div>
-          )}
-          {!auth.isAuthenticated && (
+          ) : (
             <NavLink
               to="/auth"
               className="group flex items-center p-2 hover:bg-white rounded-md transition duration-200"

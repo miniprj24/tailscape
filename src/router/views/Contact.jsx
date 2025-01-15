@@ -69,7 +69,7 @@ export default function ContactPage() {
 
   return (
     <FadeInOnScroll>
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
+      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-indigo-200">
         <main className="container mx-auto px-4 py-12">
           <h1 className="text-4xl font-extrabold text-center text-black-700 mb-12">
             Contact Us
@@ -85,19 +85,19 @@ export default function ContactPage() {
               </p>
               <div className="space-y-4 text-gray-600">
                 <div>
-                  <h3 className="font-semibold text-blue-900">Address:</h3>
+                  <h3 className="font-semibold text-indigo-900">Address:</h3>
                   <p>123 Pet Street, Animalville, PA 12345</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900">Phone:</h3>
+                  <h3 className="font-semibold text-indigo-900">Phone:</h3>
                   <p>(123) 456-7890</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900">Email:</h3>
+                  <h3 className="font-semibold text-indigo-900">Email:</h3>
                   <p>info@petpalsstore.com</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-blue-900">Hours:</h3>
+                  <h3 className="font-semibold text-indigo-900">Hours:</h3>
                   <p>Monday - Friday: 9am - 7pm</p>
                   <p>Saturday: 10am - 6pm</p>
                   <p>Sunday: 12pm - 5pm</p>
@@ -174,7 +174,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <Button type="submit" 
-                classes="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-300">
+                classes="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-300">
                   Send Message
                 </Button>
               </form>

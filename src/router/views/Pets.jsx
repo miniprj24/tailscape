@@ -21,29 +21,63 @@ export default function PetsPage() {
   const dispatch = useDispatch();
 
   const auth = useSelector((state) => state.auth);
+
+  // Fetch pets from the API
   const fetchPets = async () => {
     try {
-      setLoading(true); // Show loading spinner
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/pets`
-      ); // Replace with your API endpoint
-      const data = await response.data;
+      setLoading(true);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/pets`);
+      const data = response.data;
 
       if (Array.isArray(data.pet)) {
-        setPets(data.pet); // Set the fetched pets data
+        setPets(data.pet);
       } else {
         console.error('Invalid data format: expected an array of pets');
       }
     } catch (error) {
       console.error('Error fetching pets:', error);
     } finally {
-      setLoading(false); // Hide loading spinner after fetching is complete
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchPets();
   }, []);
 
+  // Remove pet (DELETE request)
+  const handleRemovePet = async (petId) => {
+    const token = sessionStorage.getItem('token'); // Replace with actual token retrieval logic
+
+    if (!token) {
+      alert("Authorization token is missing");
+      return;
+    }
+
+    const confirmDelete = window.confirm('Are you sure you want to delete this pet?');
+    if (!confirmDelete) return;
+
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/pets/delete/${petId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert('Pet deleted successfully.');
+        setPets((prevPets) => prevPets.filter((pet) => pet._id !== petId)); // Update the pets state
+      }
+    } catch (error) {
+      console.error('Error deleting pet:', error);
+      alert('An error occurred while trying to delete the pet.');
+    }
+  };
+
+  // Filter and sort pets
   const filteredAndSortedPets = (Array.isArray(pets) ? pets : [])
     .filter(
       (pet) =>
@@ -59,7 +93,12 @@ export default function PetsPage() {
 
   return (
     <FadeInOnScroll>
-      <div className={`min-h-screen ${auth?.user?.role === 'Admin' ? 'bg-gradient-to-b from-red-50 to-red-200' : 'bg-gradient-to-b from-blue-50 to-blue-200'}`}>
+      <div
+        className={`min-h-screen ${auth?.user?.role === 'Admin'
+            ? 'bg-gradient-to-b from-red-50 to-red-200'
+            : 'bg-gradient-to-b from-indigo-50 to-indigo-200'
+          }`}
+      >
         <main className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-center mb-8">Available Pets</h1>
 
@@ -90,13 +129,27 @@ export default function PetsPage() {
           </div>
 
           {loading ? (
-            <Spinner />
+            <Spinner
+              color={
+                auth?.user?.role === 'Admin'
+                  ? 'red'
+                  : auth?.user?.role === 'User'
+                    ? 'indigo'
+                    : 'green'
+              }
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredAndSortedPets.map((pet) => (
                 <Card key={pet._id}>
                   <CardHeader>
-                    <img src={pet.images[0] || '/placeholder.svg'} alt={pet.name} width={200} height={200} className="w-full h-48 object-contain rounded-t-lg" />
+                    <img
+                      src={pet.images[0] || '/placeholder.svg'}
+                      alt={pet.name}
+                      width={200}
+                      height={200}
+                      className="w-full h-48 object-contain rounded-t-lg"
+                    />
                   </CardHeader>
                   <CardContent>
                     <CardTitle>{pet.name}</CardTitle>
@@ -107,45 +160,40 @@ export default function PetsPage() {
                     <p className="font-bold mt-2">
                       {pet.currency} {pet.price}
                     </p>
-                  </CardContent >
+                  </CardContent>
                   <CardFooter>
-                    {
-                      auth?.user?.role === 'Admin' ? (
-                        <Button
-                          classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
-                          clickEvent={() =>
-                            dispatch(removeFromCart(pet)) // Admin removes pet
-                          }
-                        >
-                          Remove Pet
-                        </Button>
-                      ) : (
-                        <Button
-                          classes="px-3 py-2 rounded bg-black text-white hover:bg-gray-800"
-                          clickEvent={() =>
-                            dispatch(
-                              addToCart({
-                                id: pet._id,
-                                name: pet.name,
-                                price: pet.price,
-                                quantity: 1,
-                                image: pet.images[0],
-                              })
-                            )
-                          }
-                        >
-                          Add to Cart
-                        </Button>
-                      )
-                    }
-                  </CardFooter >
-                </Card >
-              ))
-              }
-            </div >
+                    {auth?.user?.role === 'Admin' ? (
+                      <Button
+                        classes="px-3 py-2 rounded bg-red-500 text-white hover:bg-red-600"
+                        clickEvent={() => handleRemovePet(pet._id)} // Admin removes pet
+                      >
+                        Remove Pet
+                      </Button>
+                    ) : (
+                      <Button
+                        classes="px-3 py-2 rounded bg-black text-white hover:bg-gray-800"
+                        clickEvent={() =>
+                          dispatch(
+                            addToCart({
+                              id: pet._id,
+                              name: pet.name,
+                              price: pet.price,
+                              quantity: 1,
+                              image: pet.images[0],
+                            })
+                          )
+                        }
+                      >
+                        Add to Cart
+                      </Button>
+                    )}
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           )}
-        </main >
-      </div >
-    </FadeInOnScroll >
+        </main>
+      </div>
+    </FadeInOnScroll>
   );
 }

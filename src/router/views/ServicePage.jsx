@@ -26,7 +26,7 @@ const Services = () => {
       title: 'Book Store Appointment',
       description:
         'Visit our store to explore pets, products, and accessories with personalized assistance.',
-      link: '/StoreAppointment',
+      link: '/store-appointment',
       imgSrc: '/images/store-appointment.jpg',
       imgAlt: 'Store Appointment',
       buttonTitle: 'Book Now',
@@ -76,7 +76,7 @@ const Services = () => {
                   </p>
                   <Link
                     to={service.link}
-                    className="inline-block bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-200"
+                    className="inline-block bg-indigo-500 text-white py-2 px-6 rounded-md hover:bg-indigo-600 transition duration-200"
                   >
                     {service.buttonTitle}
                   </Link>

@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaDog, FaCat, FaFish, FaFeather } from 'react-icons/fa';
 import CategoryCard from '../../components/CategoryCard';
 import Spinner from '../../components/ui/Spinner';
 import FadeInOnScroll from '../../utilities/FadeInOnScroll';
-import { addToCart } from '../../store/cartSlice'; // Import addToCart action
+import { addToCart } from '../../store/cartSlice';
 import axios from 'axios'; 
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/products`);
         
         const shuffled = response.data.products.sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 4);
@@ -34,9 +35,9 @@ export default function Home() {
 
   return (
     <FadeInOnScroll>
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
+      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-indigo-200">
         <main>
-          {/* Hero Section */}
+          
           <section className="relative h-[45vh]">
             <img
               src="happy-pet-owner.jpg"
@@ -56,13 +57,16 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Featured Products */}
           <section className="py-16 px-6 bg-white">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
               Featured Products
             </h2>
             {loading ? (
-              <Spinner />
+              <Spinner color = {
+                auth?.user?.role === 'Admin' 
+                          ? 'red' : 
+                            auth?.user?.role === 'User' ? 'indigo' : 'green'
+              }/>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {products.map((product) => (
@@ -77,11 +81,11 @@ export default function Home() {
                     />
                     <div className="p-4">
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
-                      <p className="text-xl font-bold text-blue-600">
+                      <p className="text-xl font-bold text-indigo-600">
                         {product.currency} {product.price}
                       </p>
                       <button
-                        className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-md w-full hover:bg-blue-700 transition duration-200"
+                        className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-md w-full hover:bg-indigo-700 transition duration-200"
                         onClick={() =>
                           dispatch(
                             addToCart({
@@ -103,21 +107,20 @@ export default function Home() {
             )}
           </section>
 
-          <section className="py-16 px-6 bg-blue-50">
+          <section className="py-16 px-6 bg-indigo-50">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Shop by Category</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <CategoryCard name="Dogs" icon={<FaDog className="text-4xl text-blue-600" />} />
+              <CategoryCard name="Dogs" icon={<FaDog className="text-4xl text-indigo-600" />} />
               <CategoryCard name="Cats" icon={<FaCat className="text-4xl text-yellow-600" />} />
               <CategoryCard name="Fish" icon={<FaFish className="text-4xl text-green-600" />} />
               <CategoryCard name="Birds" icon={<FaFeather className="text-4xl text-purple-600" />} />
             </div>
           </section>
 
-          {/* Special Offers */}
           <section className="py-16 px-6 bg-white">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">Special Offers</h2>
             <div className="flex overflow-x-auto space-x-6 pb-4">
-              <div className="flex-none w-72 h-40 bg-blue-200 rounded-lg flex items-center justify-center shadow-lg">
+              <div className="flex-none w-72 h-40 bg-indigo-200 rounded-lg flex items-center justify-center shadow-lg">
                 <p className="text-xl font-semibold text-gray-900">20% Off Dog Toys</p>
               </div>
               <div className="flex-none w-72 h-40 bg-yellow-200 rounded-lg flex items-center justify-center shadow-lg">

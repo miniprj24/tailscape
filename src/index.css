@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
 /** @layer will be used when there are a lot of cluttered classes in the html 
 * Example usage:-
     <input class="sm:flex-1 max-sm:w-full text-base leading-normal 
