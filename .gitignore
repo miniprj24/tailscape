@@ -14,6 +14,10 @@ dist
 dist-ssr
 *.local
 
+# Allow Electron files
+!electron/main.js
+!electron/preload.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

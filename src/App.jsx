@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import { HashRouter, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './utilities/ScrollToTop';
@@ -40,11 +40,11 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Layout>
         <PageRoutes />
       </Layout>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

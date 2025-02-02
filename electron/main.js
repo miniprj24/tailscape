@@ -12,12 +12,16 @@ function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'), // Use the appropriate path
-    },
   });
 
-  mainWindow.loadURL('http://localhost:5173'); // Adjust if your Vite dev server runs on a different port
+  const isDev = process.env.NODE_ENV === 'development';
+
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:5173');
+  } else {
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 app.whenReady().then(createMainWindow);

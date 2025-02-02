@@ -1,16 +1,16 @@
 {
   "name": "tailscape",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "electron/main.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production vite build",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix",
     "preview": "vite preview",
     "start:electron": "cross-env NODE_ENV=development electron .",
-    "build:electron": "npm run build && electron-builder",
+    "build:electron": "npm run build && cross-env NODE_ENV=production electron-builder",
     "prettier:all": "prettier --write \"src/**/*.{js,jsx,css}\""
   },
   "dependencies": {
@@ -65,8 +65,10 @@
       "output": "electron/dist"
     },
     "files": [
-      "dist/*/",
-      "electron/*/"
+      "dist/**",
+      "electron/**",
+      "electron/main.js",
+      "electron/preload.js"
     ],
     "win": {
       "target": "nsis",
